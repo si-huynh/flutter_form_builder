@@ -1,77 +1,110 @@
-# Flutter Forms Builder
+# Flutter Form Builder
 
-A Flutter application for creating, previewing, and collecting responses to custom forms, inspired by Google Forms. Built with Material Design.
+A dynamic form builder application built with Flutter that allows users to create, preview, and collect responses to custom forms.
 
 ## Features
 
-- **Form Creation**: Create forms with multiple question types
-  - Multiple choice questions (with "Other" option)
-  - Paragraph questions
-- **Form Validation**: Mark questions as required and validate user input
-- **Form Preview**: Preview and test your forms before sharing
-- **Response Collection**: View and analyze form responses
-
-## Project Structure
-
-The project follows a structured architecture with the following components:
-
-```
-lib/
-├── main.dart              # App entry point
-├── models/                # Data models
-├── screens/               # App screens
-├── widgets/               # Reusable UI components
-├── blocs/                 # BLoC state management
-└── utils/                 # Utilities
-```
-
-## Documentation
-
-Detailed documentation is available in the `docs/` directory:
-
-- [Project Plan](docs/project_plan.md) - Overview of project structure, data models, and implementation phases
-- [UI Mockups](docs/ui_mockups.md) - Detailed UI/UX design specifications
-- [Implementation Plan](docs/implementation_plan.md) - Technical details and implementation timeline
+- Create custom forms with multiple question types:
+  - Multiple choice questions
+  - Short answer questions
+  - Long answer questions
+- Preview forms before publishing
+- Collect and view form responses
+- Real-time response aggregation
+- Beautiful and responsive UI
+- Offline support with data persistence
 
 ## Getting Started
 
 ### Prerequisites
 
-- Flutter SDK (latest stable version)
-- Android Studio or VS Code with Flutter plugins
-- An emulator or physical device for testing
+- Flutter SDK (3.1.0 or higher)
+- Dart SDK (3.0.0 or higher)
+- A code editor (VS Code, Android Studio, etc.)
 
 ### Installation
 
-1. Clone the repository
-   ```bash
-   git clone https://github.com/yourusername/flutter_form_builder.git
-   ```
+1. Clone the repository:
+```bash
+git clone https://github.com/sihuynh/flutter_form_builder.git
+```
 
-2. Navigate to the project directory
-   ```bash
-   cd flutter_form_builder
-   ```
+2. Navigate to the project directory:
+```bash
+cd flutter_form_builder
+```
 
-3. Get dependencies
-   ```bash
-   flutter pub get
-   ```
+3. Install dependencies:
+```bash
+flutter pub get
+```
 
-4. Run the app
-   ```bash
-   flutter run
-   ```
+4. Run the code generation:
+```bash
+dart pub run build_runner build --delete-conflicting-outputs
+```
 
-## Development Roadmap
+5. Run the app:
+```bash
+flutter run
+```
 
-- [x] Project planning and documentation
-- [ ] Basic app structure and navigation
-- [ ] Form builder implementation
-- [ ] Form preview and validation
-- [ ] Response collection and display
-- [ ] UI polish and testing
+## Architecture
+
+The application follows a clean architecture pattern with BLoC (Business Logic Component) for state management:
+
+- `lib/models/` - Data models and their serialization
+- `lib/blocs/` - Business logic and state management
+- `lib/screens/` - UI screens and pages
+- `lib/widgets/` - Reusable UI components
+- `lib/router/` - Navigation and routing
+- `lib/utils/` - Utility functions and helpers
+
+### State Management
+
+The app uses the BLoC pattern with the following key components:
+
+- `FormEditorBloc` - Manages form creation and editing
+- `PreviewBloc` - Handles form preview and validation
+- `ResponsesBloc` - Manages form responses and aggregation
+
+## Testing
+
+### Running Tests
+
+1. Unit Tests:
+```bash
+flutter test
+```
+
+2. Widget Tests:
+```bash
+flutter test test/screens/
+```
+
+3. Integration Tests:
+```bash
+flutter test integration_test/
+```
+
+### Test Coverage
+
+To generate test coverage reports:
+```bash
+flutter test --coverage
+genhtml coverage/lcov.info -o coverage/html
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
+
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and development process.
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details. 
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details. 
