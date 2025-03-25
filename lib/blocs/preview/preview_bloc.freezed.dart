@@ -176,10 +176,7 @@ class _$UpdateAnswerEventCopyWithImpl<$Res>
           ? _self.questionId
           : questionId // ignore: cast_nullable_to_non_nullable
               as String,
-      freezed == answer
-          ? _self.answer
-          : answer // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+      freezed == answer ? _self.answer! : answer,
     ));
   }
 }
@@ -389,6 +386,7 @@ class PreviewStateLoaded extends PreviewState {
       {required this.form,
       required final Map<String, dynamic> answers,
       required final Map<String, String?> errors,
+      this.validated = false,
       final String? $type})
       : _answers = answers,
         _errors = errors,
@@ -411,6 +409,9 @@ class PreviewStateLoaded extends PreviewState {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableMapView(_errors);
   }
+
+  @JsonKey()
+  final bool validated;
 
   @JsonKey(name: 'runtimeType')
   final String $type;
@@ -436,7 +437,9 @@ class PreviewStateLoaded extends PreviewState {
             other is PreviewStateLoaded &&
             (identical(other.form, form) || other.form == form) &&
             const DeepCollectionEquality().equals(other._answers, _answers) &&
-            const DeepCollectionEquality().equals(other._errors, _errors));
+            const DeepCollectionEquality().equals(other._errors, _errors) &&
+            (identical(other.validated, validated) ||
+                other.validated == validated));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -445,11 +448,12 @@ class PreviewStateLoaded extends PreviewState {
       runtimeType,
       form,
       const DeepCollectionEquality().hash(_answers),
-      const DeepCollectionEquality().hash(_errors));
+      const DeepCollectionEquality().hash(_errors),
+      validated);
 
   @override
   String toString() {
-    return 'PreviewState.loaded(form: $form, answers: $answers, errors: $errors)';
+    return 'PreviewState.loaded(form: $form, answers: $answers, errors: $errors, validated: $validated)';
   }
 }
 
@@ -463,7 +467,8 @@ abstract mixin class $PreviewStateLoadedCopyWith<$Res>
   $Res call(
       {FormModel form,
       Map<String, dynamic> answers,
-      Map<String, String?> errors});
+      Map<String, String?> errors,
+      bool validated});
 
   $FormModelCopyWith<$Res> get form;
 }
@@ -483,6 +488,7 @@ class _$PreviewStateLoadedCopyWithImpl<$Res>
     Object? form = null,
     Object? answers = null,
     Object? errors = null,
+    Object? validated = null,
   }) {
     return _then(PreviewStateLoaded(
       form: null == form
@@ -497,6 +503,10 @@ class _$PreviewStateLoadedCopyWithImpl<$Res>
           ? _self._errors
           : errors // ignore: cast_nullable_to_non_nullable
               as Map<String, String?>,
+      validated: null == validated
+          ? _self.validated
+          : validated // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 

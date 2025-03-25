@@ -116,7 +116,7 @@ class _FormBuilderViewState extends State<FormBuilderView> {
               hintText: 'Form Description',
               border: OutlineInputBorder(),
             ),
-            maxLines: 3,
+            maxLines: 2,
             onChanged: (value) {
               context.read<FormEditorBloc>().add(
                     UpdateFormEvent(
@@ -131,7 +131,9 @@ class _FormBuilderViewState extends State<FormBuilderView> {
   }
 
   Widget _buildQuestionsList(
-      BuildContext context, List<QuestionModel> questions,) {
+    BuildContext context,
+    List<QuestionModel> questions,
+  ) {
     return ReorderableListView.builder(
       padding: const EdgeInsets.only(bottom: 80),
       itemCount: questions.length,

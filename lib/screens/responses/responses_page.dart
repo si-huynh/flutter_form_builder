@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/blocs/form_editor_bloc/form_editor_bloc.dart';
+import 'package:flutter_form_builder/widgets/paragraph_question.dart';
 import 'package:gap/gap.dart';
 import '../../blocs/responses/responses_bloc.dart';
 import '../../models/form_model.dart';
@@ -80,11 +81,13 @@ class ResponsesView extends StatelessWidget {
           style: Theme.of(context).textTheme.titleLarge,
         ),
         const Gap(16),
-        ...form.questions.map((question) => _buildQuestionSummary(
-              context,
-              question,
-              aggregation[question.id],
-            ),),
+        ...form.questions.map(
+          (question) => _buildQuestionSummary(
+            context,
+            question,
+            aggregation[question.id],
+          ),
+        ),
         const Gap(32),
         Text(
           'Individual Responses',
@@ -101,6 +104,10 @@ class ResponsesView extends StatelessWidget {
     QuestionModel question,
     aggregatedData,
   ) {
+    if (aggregatedData == null) {
+      return const SizedBox.shrink();
+    }
+
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -115,17 +122,53 @@ class ResponsesView extends StatelessWidget {
             if (question case MultipleChoiceQuestion())
               _buildMultipleChoiceSummary(
                 context,
-                aggregatedData as Map<String, int>,
+                _safeMultipleChoiceData(aggregatedData),
               )
-            else
+            else if (question case ParagraphQuestion())
               _buildParagraphSummary(
                 context,
-                aggregatedData as List<String>,
+                _safeParagraphData(aggregatedData),
               ),
           ],
         ),
       ),
     );
+  }
+
+  // Helper method to safely convert aggregated data to the expected Map format
+  Map<String, int> _safeMultipleChoiceData(data) {
+    if (data is Map<String, int>) {
+      return data;
+    } else if (data is Map) {
+      // Try to convert from a dynamic Map to the expected type
+      final result = <String, int>{};
+      data.forEach((key, value) {
+        if (key is String && value is int) {
+          result[key] = value;
+        } else if (key is String && value != null) {
+          // Try to convert numeric values
+          result[key] = int.tryParse(value.toString()) ?? 0;
+        }
+      });
+      return result;
+    }
+    // Return empty Map as fallback
+    return {};
+  }
+
+  // Helper method to safely convert aggregated data to the expected List format
+  List<String> _safeParagraphData(data) {
+    if (data is List<String>) {
+      return data;
+    } else if (data is List) {
+      // Convert any list to list of strings
+      return data
+          .map((item) => item?.toString() ?? '')
+          .where((item) => item.isNotEmpty)
+          .toList();
+    }
+    // Return empty List as fallback
+    return [];
   }
 
   Widget _buildMultipleChoiceSummary(
@@ -146,9 +189,11 @@ class ResponsesView extends StatelessWidget {
 
   Widget _buildParagraphSummary(
     BuildContext context,
-    List<String> answers,
+    List<String>? answers,
   ) {
-    if (answers.isEmpty) return const Text('No responses');
+    if (answers == null || answers.isEmpty) {
+      return const Text('No responses');
+    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

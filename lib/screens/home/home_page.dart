@@ -24,6 +24,7 @@ class HomePage extends StatelessWidget {
           PreviewRoute(),
           ResponsesRoute(),
         ],
+        lazyLoad: false,
         bottomNavigationBuilder: (_, tabsRouter) {
           return BottomNavigationBar(
             currentIndex: tabsRouter.activeIndex,

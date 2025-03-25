@@ -33,6 +33,7 @@ PreviewStateLoaded _$PreviewStateLoadedFromJson(Map<String, dynamic> json) =>
       form: FormModel.fromJson(json['form'] as Map<String, dynamic>),
       answers: json['answers'] as Map<String, dynamic>,
       errors: Map<String, String?>.from(json['errors'] as Map),
+      validated: json['validated'] as bool? ?? false,
       $type: json['runtimeType'] as String?,
     );
 
@@ -41,6 +42,7 @@ Map<String, dynamic> _$PreviewStateLoadedToJson(PreviewStateLoaded instance) =>
       'form': instance.form,
       'answers': instance.answers,
       'errors': instance.errors,
+      'validated': instance.validated,
       'runtimeType': instance.$type,
     };
 

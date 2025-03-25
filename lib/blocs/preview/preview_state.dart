@@ -10,6 +10,7 @@ sealed class PreviewState with _$PreviewState {
     required FormModel form,
     required Map<String, dynamic> answers,
     required Map<String, String?> errors,
+    @Default(false) bool validated,
   }) = PreviewStateLoaded;
   const factory PreviewState.error(String message) = PreviewStateError;
 
