@@ -84,7 +84,7 @@ class ResponsesView extends StatelessWidget {
               context,
               question,
               aggregation[question.id],
-            )),
+            ),),
         const Gap(32),
         Text(
           'Individual Responses',
@@ -99,7 +99,7 @@ class ResponsesView extends StatelessWidget {
   Widget _buildQuestionSummary(
     BuildContext context,
     QuestionModel question,
-    dynamic aggregatedData,
+    aggregatedData,
   ) {
     return Card(
       child: Padding(

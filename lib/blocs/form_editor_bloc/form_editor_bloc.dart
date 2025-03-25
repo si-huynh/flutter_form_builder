@@ -1,16 +1,17 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:uuid/uuid.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
+
 import '../../models/form_model.dart';
 import '../../models/question_model.dart';
 
-part 'form_editor_event.dart';
-part 'form_editor_state.dart';
 part 'form_editor_bloc.freezed.dart';
 part 'form_editor_bloc.g.dart';
+part 'form_editor_event.dart';
+part 'form_editor_state.dart';
 
 class FormEditorBloc extends HydratedBloc<FormEditorEvent, FormEditorState> {
-  FormEditorBloc() : super(FormEditorState.initial()) {
+  FormEditorBloc() : super(const FormEditorState.initial()) {
     on<CreateFormEvent>(_onCreateForm);
     on<UpdateFormEvent>(_onUpdateForm);
     on<AddQuestionEvent>(_onAddQuestion);
@@ -25,8 +26,6 @@ class FormEditorBloc extends HydratedBloc<FormEditorEvent, FormEditorState> {
     final form = FormModel(
       id: const Uuid().v4(),
       title: '',
-      description: '',
-      questions: const [],
     );
     emit(FormEditorState.loaded(form));
   }
@@ -42,7 +41,6 @@ class FormEditorBloc extends HydratedBloc<FormEditorEvent, FormEditorState> {
           MultipleChoice() => QuestionModel.multipleChoice(
               id: const Uuid().v4(),
               text: '',
-              options: const [],
             ),
           Paragraph() => QuestionModel.longAnswer(
               id: const Uuid().v4(),
@@ -59,7 +57,7 @@ class FormEditorBloc extends HydratedBloc<FormEditorEvent, FormEditorState> {
   }
 
   void _onDeleteQuestion(
-      DeleteQuestionEvent event, Emitter<FormEditorState> emit) {
+      DeleteQuestionEvent event, Emitter<FormEditorState> emit,) {
     switch (state) {
       case FormEditorStateLoaded(:final form):
         final updatedForm = form.copyWith(
@@ -73,7 +71,7 @@ class FormEditorBloc extends HydratedBloc<FormEditorEvent, FormEditorState> {
   }
 
   void _onReorderQuestions(
-      ReorderQuestionsEvent event, Emitter<FormEditorState> emit) {
+      ReorderQuestionsEvent event, Emitter<FormEditorState> emit,) {
     switch (state) {
       case FormEditorStateLoaded(:final form):
         final questions = List<QuestionModel>.from(form.questions);
@@ -127,7 +125,7 @@ class FormEditorBloc extends HydratedBloc<FormEditorEvent, FormEditorState> {
   }
 
   void _onToggleOtherOption(
-      ToggleOtherOptionEvent event, Emitter<FormEditorState> emit) {
+      ToggleOtherOptionEvent event, Emitter<FormEditorState> emit,) {
     switch (state) {
       case FormEditorStateLoaded(:final form):
         final updatedQuestions = form.questions.map((question) {

@@ -5,12 +5,6 @@ import 'debounced_text_field.dart';
 import 'multiple_choice_question.dart' as mcq;
 
 class QuestionCard extends StatelessWidget {
-  final QuestionModel question;
-  final VoidCallback onDelete;
-  final ValueChanged<String> onTextChanged;
-  final ValueChanged<bool> onRequiredChanged;
-  final ValueChanged<List<String>> onOptionsChanged;
-  final ValueChanged<bool> onOtherOptionChanged;
 
   const QuestionCard({
     required this.question,
@@ -21,6 +15,12 @@ class QuestionCard extends StatelessWidget {
     required this.onOtherOptionChanged,
     super.key,
   });
+  final QuestionModel question;
+  final VoidCallback onDelete;
+  final ValueChanged<String> onTextChanged;
+  final ValueChanged<bool> onRequiredChanged;
+  final ValueChanged<List<String>> onOptionsChanged;
+  final ValueChanged<bool> onOtherOptionChanged;
 
   @override
   Widget build(BuildContext context) {

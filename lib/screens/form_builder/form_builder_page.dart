@@ -1,13 +1,15 @@
 import 'dart:async';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart' hide FormState;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+
 import '../../blocs/form_editor_bloc/form_editor_bloc.dart';
 import '../../models/form_model.dart';
 import '../../models/question_model.dart';
-import '../../widgets/question_card.dart';
 import '../../widgets/debounced_text_field.dart';
+import '../../widgets/question_card.dart';
 
 @RoutePage()
 class FormBuilderPage extends StatelessWidget {
@@ -129,7 +131,7 @@ class _FormBuilderViewState extends State<FormBuilderView> {
   }
 
   Widget _buildQuestionsList(
-      BuildContext context, List<QuestionModel> questions) {
+      BuildContext context, List<QuestionModel> questions,) {
     return ReorderableListView.builder(
       padding: const EdgeInsets.only(bottom: 80),
       itemCount: questions.length,
@@ -233,7 +235,7 @@ class _FormBuilderViewState extends State<FormBuilderView> {
                   context.read<FormEditorBloc>().add(const CreateFormEvent());
                 }
                 context.read<FormEditorBloc>().add(
-                      AddQuestionEvent(QuestionType.multipleChoice()),
+                      const AddQuestionEvent(QuestionType.multipleChoice()),
                     );
                 Navigator.pop(context);
               },
@@ -246,7 +248,7 @@ class _FormBuilderViewState extends State<FormBuilderView> {
                   context.read<FormEditorBloc>().add(const CreateFormEvent());
                 }
                 context.read<FormEditorBloc>().add(
-                      AddQuestionEvent(QuestionType.paragraph()),
+                      const AddQuestionEvent(QuestionType.paragraph()),
                     );
                 Navigator.pop(context);
               },

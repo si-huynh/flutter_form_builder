@@ -5,10 +5,6 @@ import 'debounced_text_field.dart';
 import 'multiple_choice_answer.dart';
 
 class PreviewQuestionCard extends StatelessWidget {
-  final QuestionModel question;
-  final dynamic currentAnswer;
-  final String? error;
-  final ValueChanged<dynamic> onAnswerChanged;
 
   const PreviewQuestionCard({
     required this.question,
@@ -17,6 +13,10 @@ class PreviewQuestionCard extends StatelessWidget {
     required this.onAnswerChanged,
     super.key,
   });
+  final QuestionModel question;
+  final dynamic currentAnswer;
+  final String? error;
+  final ValueChanged<dynamic> onAnswerChanged;
 
   @override
   Widget build(BuildContext context) {

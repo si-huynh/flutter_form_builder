@@ -21,7 +21,7 @@ class PreviewBloc extends Bloc<PreviewEvent, PreviewState> {
       form: event.form,
       answers: const {},
       errors: const {},
-    ));
+    ),);
   }
 
   void _onUpdateAnswer(UpdateAnswerEvent event, Emitter<PreviewState> emit) {
@@ -34,7 +34,7 @@ class PreviewBloc extends Bloc<PreviewEvent, PreviewState> {
           form: form,
           answers: updatedAnswers,
           errors: errors,
-        ));
+        ),);
       case _:
         return;
     }
@@ -58,7 +58,7 @@ class PreviewBloc extends Bloc<PreviewEvent, PreviewState> {
           form: form,
           answers: answers,
           errors: updatedErrors,
-        ));
+        ),);
       case _:
         return;
     }

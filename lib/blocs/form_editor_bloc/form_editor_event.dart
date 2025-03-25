@@ -13,7 +13,7 @@ class FormEditorEvent with _$FormEditorEvent {
   const factory FormEditorEvent.addOption(String questionId, String option) =
       AddOptionEvent;
   const factory FormEditorEvent.deleteOption(
-      String questionId, int optionIndex) = DeleteOptionEvent;
+      String questionId, int optionIndex,) = DeleteOptionEvent;
   const factory FormEditorEvent.toggleOtherOption(
-      String questionId, bool hasOther) = ToggleOtherOptionEvent;
+      String questionId, bool hasOther,) = ToggleOtherOptionEvent;
 }

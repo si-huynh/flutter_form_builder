@@ -2,12 +2,13 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/blocs/form_editor_bloc/form_editor_bloc.dart';
+import 'package:uuid/uuid.dart';
+
 import '../../blocs/preview/preview_bloc.dart';
-import '../../widgets/preview_question_card.dart';
 import '../../blocs/responses/responses_bloc.dart';
 import '../../models/response_model.dart';
-import 'package:uuid/uuid.dart';
 import '../../router/app_router.gr.dart';
+import '../../widgets/preview_question_card.dart';
 
 @RoutePage()
 class PreviewPage extends StatelessWidget {
@@ -77,6 +78,6 @@ class PreviewPage extends StatelessWidget {
           ),
         ),
       );
-    });
+    },);
   }
 }

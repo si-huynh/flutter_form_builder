@@ -3,10 +3,6 @@ import 'package:gap/gap.dart';
 import 'debounced_text_field.dart';
 
 class MultipleChoiceQuestion extends StatelessWidget {
-  final List<String> options;
-  final bool hasOther;
-  final ValueChanged<List<String>> onOptionsChanged;
-  final ValueChanged<bool> onHasOtherChanged;
 
   const MultipleChoiceQuestion({
     required this.options,
@@ -15,6 +11,10 @@ class MultipleChoiceQuestion extends StatelessWidget {
     required this.onHasOtherChanged,
     super.key,
   });
+  final List<String> options;
+  final bool hasOther;
+  final ValueChanged<List<String>> onOptionsChanged;
+  final ValueChanged<bool> onHasOtherChanged;
 
   @override
   Widget build(BuildContext context) {

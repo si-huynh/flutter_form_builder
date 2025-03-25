@@ -2,12 +2,6 @@ import 'package:flutter/material.dart';
 import 'debounced_text_field.dart';
 
 class MultipleChoiceAnswer extends StatelessWidget {
-  final List<String> options;
-  final bool hasOther;
-  final String? value;
-  final String? otherText;
-  final ValueChanged<String?> onChanged;
-  final ValueChanged<String> onOtherTextChanged;
 
   const MultipleChoiceAnswer({
     required this.options,
@@ -18,6 +12,12 @@ class MultipleChoiceAnswer extends StatelessWidget {
     this.otherText,
     super.key,
   });
+  final List<String> options;
+  final bool hasOther;
+  final String? value;
+  final String? otherText;
+  final ValueChanged<String?> onChanged;
+  final ValueChanged<String> onOtherTextChanged;
 
   @override
   Widget build(BuildContext context) {

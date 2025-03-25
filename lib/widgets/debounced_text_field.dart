@@ -2,15 +2,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 class DebouncedTextField extends StatefulWidget {
-  final String initialValue;
-  final ValueChanged<String> onChanged;
-  final InputDecoration? decoration;
-  final int? maxLines;
-  final Duration debounceDuration;
-  final TextEditingController? controller;
-  final TextInputType? keyboardType;
-  final bool autofocus;
-  final FocusNode? focusNode;
 
   const DebouncedTextField({
     required this.onChanged,
@@ -24,6 +15,15 @@ class DebouncedTextField extends StatefulWidget {
     this.focusNode,
     super.key,
   });
+  final String initialValue;
+  final ValueChanged<String> onChanged;
+  final InputDecoration? decoration;
+  final int? maxLines;
+  final Duration debounceDuration;
+  final TextEditingController? controller;
+  final TextInputType? keyboardType;
+  final bool autofocus;
+  final FocusNode? focusNode;
 
   @override
   State<DebouncedTextField> createState() => _DebouncedTextFieldState();

@@ -13,7 +13,6 @@ class ParagraphQuestion extends StatelessWidget {
         border: OutlineInputBorder(),
       ),
       onChanged: (_) {},
-      initialValue: '',
     );
   }
 }
