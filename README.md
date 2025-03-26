@@ -2,6 +2,18 @@
 
 A comprehensive form building application built with Flutter that allows users to create, manage, preview, and collect responses to custom forms. The application features persistent state management, a modern dashboard UI, and detailed response analytics.
 
+## Releases
+
+### Version 1.0.0 (Initial Release)
+- Complete form creation and management system
+- Dashboard for form organization
+- Support for multiple question types
+- Form preview functionality
+- Response collection and analytics
+- Persistent storage for forms and responses
+
+[Download APK](https://github.com/yourusername/flutter_form_builder/releases/tag/v1.0.0)
+
 ## Features
 
 - **Dashboard Management**:
