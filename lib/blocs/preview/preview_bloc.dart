@@ -10,13 +10,13 @@ part 'preview_bloc.g.dart';
 
 class PreviewBloc extends HydratedBloc<PreviewEvent, PreviewState> {
   PreviewBloc() : super(const PreviewState.initial()) {
-    on<LoadFormEvent>(_onLoadForm);
-    on<UpdateAnswerEvent>(_onUpdateAnswer);
-    on<ValidateFormEvent>(_onValidateForm);
-    on<SubmitFormEvent>(_onSubmitForm);
+    on<PreviewEventLoadForm>(_onLoadForm);
+    on<PreviewEventUpdateAnswer>(_onUpdateAnswer);
+    on<PreviewEventValidateForm>(_onValidateForm);
+    on<PreviewEventSubmitForm>(_onSubmitForm);
   }
 
-  void _onLoadForm(LoadFormEvent event, Emitter<PreviewState> emit) {
+  void _onLoadForm(PreviewEventLoadForm event, Emitter<PreviewState> emit) {
     emit(const PreviewState.loading());
     emit(
       PreviewState.loaded(
@@ -27,7 +27,8 @@ class PreviewBloc extends HydratedBloc<PreviewEvent, PreviewState> {
     );
   }
 
-  void _onUpdateAnswer(UpdateAnswerEvent event, Emitter<PreviewState> emit) {
+  void _onUpdateAnswer(
+      PreviewEventUpdateAnswer event, Emitter<PreviewState> emit) {
     switch (state) {
       case PreviewStateLoaded(:final form, :final answers, :final errors):
         final updatedAnswers = Map<String, dynamic>.from(answers);
@@ -45,7 +46,10 @@ class PreviewBloc extends HydratedBloc<PreviewEvent, PreviewState> {
     }
   }
 
-  void _onValidateForm(ValidateFormEvent event, Emitter<PreviewState> emit) {
+  void _onValidateForm(
+    PreviewEventValidateForm event,
+    Emitter<PreviewState> emit,
+  ) {
     switch (state) {
       case PreviewStateLoaded(:final form, :final answers):
         final updatedErrors = <String, String?>{};
@@ -71,7 +75,10 @@ class PreviewBloc extends HydratedBloc<PreviewEvent, PreviewState> {
     }
   }
 
-  void _onSubmitForm(SubmitFormEvent event, Emitter<PreviewState> emit) {
+  void _onSubmitForm(
+    PreviewEventSubmitForm event,
+    Emitter<PreviewState> emit,
+  ) {
     switch (state) {
       case PreviewStateLoaded(:final form, :final answers, :final errors):
         if (errors.isEmpty) {

@@ -2,8 +2,8 @@ part of 'form_editor_bloc.dart';
 
 @freezed
 class FormEditorEvent with _$FormEditorEvent {
-  const factory FormEditorEvent.create() = CreateFormEvent;
-  const factory FormEditorEvent.update(FormModel form) = UpdateFormEvent;
+  const factory FormEditorEvent.loadForm(FormModel form) = LoadFormEvent;
+  const factory FormEditorEvent.updateForm(FormModel form) = UpdateFormEvent;
   const factory FormEditorEvent.addQuestion(QuestionType type) =
       AddQuestionEvent;
   const factory FormEditorEvent.deleteQuestion(String questionId) =
@@ -13,7 +13,11 @@ class FormEditorEvent with _$FormEditorEvent {
   const factory FormEditorEvent.addOption(String questionId, String option) =
       AddOptionEvent;
   const factory FormEditorEvent.deleteOption(
-      String questionId, int optionIndex,) = DeleteOptionEvent;
+    String questionId,
+    int optionIndex,
+  ) = DeleteOptionEvent;
   const factory FormEditorEvent.toggleOtherOption(
-      String questionId, bool hasOther,) = ToggleOtherOptionEvent;
+    String questionId,
+    bool hasOther,
+  ) = ToggleOtherOptionEvent;
 }

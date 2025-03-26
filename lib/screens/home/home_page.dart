@@ -8,7 +8,10 @@ import '../../router/app_router.gr.dart';
 
 @RoutePage()
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  const HomePage({super.key, required this.formId});
+
+  @PathParam()
+  final String formId;
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +22,10 @@ class HomePage extends StatelessWidget {
         BlocProvider(create: (context) => ResponsesBloc()),
       ],
       child: AutoTabsScaffold(
-        routes: const [
-          FormBuilderRoute(),
-          PreviewRoute(),
-          ResponsesRoute(),
+        routes: [
+          FormBuilderRoute(formId: formId),
+          PreviewRoute(formId: formId),
+          ResponsesRoute(formId: formId),
         ],
         lazyLoad: false,
         bottomNavigationBuilder: (_, tabsRouter) {

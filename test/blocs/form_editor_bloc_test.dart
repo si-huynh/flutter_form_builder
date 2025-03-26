@@ -40,7 +40,14 @@ void main() {
     blocTest<FormEditorBloc, FormEditorState>(
       'emits [loaded] when CreateFormEvent is added',
       build: () => formEditorBloc,
-      act: (bloc) => bloc.add(const CreateFormEvent()),
+      act: (bloc) => bloc.add(
+        const LoadFormEvent(
+          FormModel(
+            id: 'test',
+            title: '',
+          ),
+        ),
+      ),
       expect: () => [
         isA<FormEditorStateLoaded>().having(
           (state) => state.form.questions.length,

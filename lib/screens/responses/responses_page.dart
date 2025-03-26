@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/blocs/form_editor_bloc/form_editor_bloc.dart';
+import 'package:flutter_form_builder/blocs/forms/forms_bloc.dart';
 import 'package:flutter_form_builder/widgets/paragraph_question.dart';
 import 'package:gap/gap.dart';
 import '../../blocs/responses/responses_bloc.dart';
@@ -10,10 +11,36 @@ import '../../models/question_model.dart';
 import '../../models/response_model.dart';
 
 @RoutePage()
-class ResponsesPage extends StatelessWidget {
+class ResponsesPage extends StatefulWidget {
   const ResponsesPage({
     super.key,
+    required this.formId,
   });
+
+  @PathParam()
+  final String formId;
+
+  @override
+  State<ResponsesPage> createState() => _ResponsesPageState();
+}
+
+class _ResponsesPageState extends State<ResponsesPage> {
+  @override
+  void initState() {
+    super.initState();
+    // Ensure form is loaded when page is created - will be called after first build
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _loadFormIfAvailable();
+    });
+  }
+
+  void _loadFormIfAvailable() {
+    final formState = context.read<FormsBloc>().state;
+    if (formState case FormsStateLoaded(:final forms)) {
+      final form = forms.firstWhere((form) => form.id == widget.formId);
+      context.read<ResponsesBloc>().add(LoadResponsesEvent(form));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -176,7 +203,9 @@ class ResponsesView extends StatelessWidget {
     Map<String, int> counts,
   ) {
     final total = counts.values.fold<int>(0, (sum, count) => sum + count);
-    if (total == 0) return const Text('No responses');
+    if (total == 0) {
+      return const Text('No responses');
+    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

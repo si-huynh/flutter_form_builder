@@ -10,9 +10,9 @@ part 'form_editor_bloc.g.dart';
 part 'form_editor_event.dart';
 part 'form_editor_state.dart';
 
-class FormEditorBloc extends HydratedBloc<FormEditorEvent, FormEditorState> {
+class FormEditorBloc extends Bloc<FormEditorEvent, FormEditorState> {
   FormEditorBloc() : super(const FormEditorState.initial()) {
-    on<CreateFormEvent>(_onCreateForm);
+    on<LoadFormEvent>(_onLoadForm);
     on<UpdateFormEvent>(_onUpdateForm);
     on<AddQuestionEvent>(_onAddQuestion);
     on<DeleteQuestionEvent>(_onDeleteQuestion);
@@ -22,12 +22,8 @@ class FormEditorBloc extends HydratedBloc<FormEditorEvent, FormEditorState> {
     on<ToggleOtherOptionEvent>(_onToggleOtherOption);
   }
 
-  void _onCreateForm(CreateFormEvent event, Emitter<FormEditorState> emit) {
-    final form = FormModel(
-      id: const Uuid().v4(),
-      title: '',
-    );
-    emit(FormEditorState.loaded(form));
+  void _onLoadForm(LoadFormEvent event, Emitter<FormEditorState> emit) {
+    emit(FormEditorState.loaded(event.form));
   }
 
   void _onUpdateForm(UpdateFormEvent event, Emitter<FormEditorState> emit) {
@@ -57,7 +53,9 @@ class FormEditorBloc extends HydratedBloc<FormEditorEvent, FormEditorState> {
   }
 
   void _onDeleteQuestion(
-      DeleteQuestionEvent event, Emitter<FormEditorState> emit,) {
+    DeleteQuestionEvent event,
+    Emitter<FormEditorState> emit,
+  ) {
     switch (state) {
       case FormEditorStateLoaded(:final form):
         final updatedForm = form.copyWith(
@@ -71,7 +69,9 @@ class FormEditorBloc extends HydratedBloc<FormEditorEvent, FormEditorState> {
   }
 
   void _onReorderQuestions(
-      ReorderQuestionsEvent event, Emitter<FormEditorState> emit,) {
+    ReorderQuestionsEvent event,
+    Emitter<FormEditorState> emit,
+  ) {
     switch (state) {
       case FormEditorStateLoaded(:final form):
         final questions = List<QuestionModel>.from(form.questions);
@@ -125,7 +125,9 @@ class FormEditorBloc extends HydratedBloc<FormEditorEvent, FormEditorState> {
   }
 
   void _onToggleOtherOption(
-      ToggleOtherOptionEvent event, Emitter<FormEditorState> emit,) {
+    ToggleOtherOptionEvent event,
+    Emitter<FormEditorState> emit,
+  ) {
     switch (state) {
       case FormEditorStateLoaded(:final form):
         final updatedQuestions = form.questions.map((question) {
@@ -141,15 +143,5 @@ class FormEditorBloc extends HydratedBloc<FormEditorEvent, FormEditorState> {
       case _:
         return;
     }
-  }
-
-  @override
-  FormEditorState? fromJson(Map<String, dynamic> json) {
-    return FormEditorState.fromJson(json);
-  }
-
-  @override
-  Map<String, dynamic>? toJson(FormEditorState state) {
-    return state.toJson();
   }
 }

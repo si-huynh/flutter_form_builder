@@ -21,5 +21,5 @@ Map<String, dynamic> _$FormModelToJson(_FormModel instance) =>
       'id': instance.id,
       'title': instance.title,
       'description': instance.description,
-      'questions': instance.questions,
+      'questions': instance.questions.map((q) => q.toJson()).toList(),
     };

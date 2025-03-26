@@ -42,7 +42,7 @@ void main() {
       return MaterialApp(
         home: BlocProvider<FormEditorBloc>.value(
           value: mockBloc,
-          child: const FormBuilderPage(),
+          child: const FormBuilderPage(formId: 'test'),
         ),
       );
     }
@@ -116,7 +116,7 @@ void main() {
       await tester.tap(find.text('Multiple Choice'));
       await tester.pumpAndSettle();
 
-      verify(() => mockBloc.add(any(that: isA<CreateFormEvent>()))).called(1);
+      verify(() => mockBloc.add(any(that: isA<LoadFormEvent>()))).called(1);
       verify(() => mockBloc.add(any(that: isA<AddQuestionEvent>()))).called(1);
     });
   });

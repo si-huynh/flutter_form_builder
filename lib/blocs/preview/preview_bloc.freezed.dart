@@ -37,8 +37,8 @@ class $PreviewEventCopyWith<$Res> {
 
 /// @nodoc
 
-class LoadFormEvent implements PreviewEvent {
-  const LoadFormEvent(this.form);
+class PreviewEventLoadForm implements PreviewEvent {
+  const PreviewEventLoadForm(this.form);
 
   final FormModel form;
 
@@ -46,14 +46,15 @@ class LoadFormEvent implements PreviewEvent {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $LoadFormEventCopyWith<LoadFormEvent> get copyWith =>
-      _$LoadFormEventCopyWithImpl<LoadFormEvent>(this, _$identity);
+  $PreviewEventLoadFormCopyWith<PreviewEventLoadForm> get copyWith =>
+      _$PreviewEventLoadFormCopyWithImpl<PreviewEventLoadForm>(
+          this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is LoadFormEvent &&
+            other is PreviewEventLoadForm &&
             (identical(other.form, form) || other.form == form));
   }
 
@@ -67,11 +68,11 @@ class LoadFormEvent implements PreviewEvent {
 }
 
 /// @nodoc
-abstract mixin class $LoadFormEventCopyWith<$Res>
+abstract mixin class $PreviewEventLoadFormCopyWith<$Res>
     implements $PreviewEventCopyWith<$Res> {
-  factory $LoadFormEventCopyWith(
-          LoadFormEvent value, $Res Function(LoadFormEvent) _then) =
-      _$LoadFormEventCopyWithImpl;
+  factory $PreviewEventLoadFormCopyWith(PreviewEventLoadForm value,
+          $Res Function(PreviewEventLoadForm) _then) =
+      _$PreviewEventLoadFormCopyWithImpl;
   @useResult
   $Res call({FormModel form});
 
@@ -79,12 +80,12 @@ abstract mixin class $LoadFormEventCopyWith<$Res>
 }
 
 /// @nodoc
-class _$LoadFormEventCopyWithImpl<$Res>
-    implements $LoadFormEventCopyWith<$Res> {
-  _$LoadFormEventCopyWithImpl(this._self, this._then);
+class _$PreviewEventLoadFormCopyWithImpl<$Res>
+    implements $PreviewEventLoadFormCopyWith<$Res> {
+  _$PreviewEventLoadFormCopyWithImpl(this._self, this._then);
 
-  final LoadFormEvent _self;
-  final $Res Function(LoadFormEvent) _then;
+  final PreviewEventLoadForm _self;
+  final $Res Function(PreviewEventLoadForm) _then;
 
   /// Create a copy of PreviewEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -92,7 +93,7 @@ class _$LoadFormEventCopyWithImpl<$Res>
   $Res call({
     Object? form = null,
   }) {
-    return _then(LoadFormEvent(
+    return _then(PreviewEventLoadForm(
       null == form
           ? _self.form
           : form // ignore: cast_nullable_to_non_nullable
@@ -113,8 +114,8 @@ class _$LoadFormEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class UpdateAnswerEvent implements PreviewEvent {
-  const UpdateAnswerEvent(this.questionId, this.answer);
+class PreviewEventUpdateAnswer implements PreviewEvent {
+  const PreviewEventUpdateAnswer(this.questionId, this.answer);
 
   final String questionId;
   final dynamic answer;
@@ -123,14 +124,15 @@ class UpdateAnswerEvent implements PreviewEvent {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $UpdateAnswerEventCopyWith<UpdateAnswerEvent> get copyWith =>
-      _$UpdateAnswerEventCopyWithImpl<UpdateAnswerEvent>(this, _$identity);
+  $PreviewEventUpdateAnswerCopyWith<PreviewEventUpdateAnswer> get copyWith =>
+      _$PreviewEventUpdateAnswerCopyWithImpl<PreviewEventUpdateAnswer>(
+          this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is UpdateAnswerEvent &&
+            other is PreviewEventUpdateAnswer &&
             (identical(other.questionId, questionId) ||
                 other.questionId == questionId) &&
             const DeepCollectionEquality().equals(other.answer, answer));
@@ -147,22 +149,22 @@ class UpdateAnswerEvent implements PreviewEvent {
 }
 
 /// @nodoc
-abstract mixin class $UpdateAnswerEventCopyWith<$Res>
+abstract mixin class $PreviewEventUpdateAnswerCopyWith<$Res>
     implements $PreviewEventCopyWith<$Res> {
-  factory $UpdateAnswerEventCopyWith(
-          UpdateAnswerEvent value, $Res Function(UpdateAnswerEvent) _then) =
-      _$UpdateAnswerEventCopyWithImpl;
+  factory $PreviewEventUpdateAnswerCopyWith(PreviewEventUpdateAnswer value,
+          $Res Function(PreviewEventUpdateAnswer) _then) =
+      _$PreviewEventUpdateAnswerCopyWithImpl;
   @useResult
   $Res call({String questionId, dynamic answer});
 }
 
 /// @nodoc
-class _$UpdateAnswerEventCopyWithImpl<$Res>
-    implements $UpdateAnswerEventCopyWith<$Res> {
-  _$UpdateAnswerEventCopyWithImpl(this._self, this._then);
+class _$PreviewEventUpdateAnswerCopyWithImpl<$Res>
+    implements $PreviewEventUpdateAnswerCopyWith<$Res> {
+  _$PreviewEventUpdateAnswerCopyWithImpl(this._self, this._then);
 
-  final UpdateAnswerEvent _self;
-  final $Res Function(UpdateAnswerEvent) _then;
+  final PreviewEventUpdateAnswer _self;
+  final $Res Function(PreviewEventUpdateAnswer) _then;
 
   /// Create a copy of PreviewEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -171,7 +173,7 @@ class _$UpdateAnswerEventCopyWithImpl<$Res>
     Object? questionId = null,
     Object? answer = freezed,
   }) {
-    return _then(UpdateAnswerEvent(
+    return _then(PreviewEventUpdateAnswer(
       null == questionId
           ? _self.questionId
           : questionId // ignore: cast_nullable_to_non_nullable
@@ -183,13 +185,13 @@ class _$UpdateAnswerEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class ValidateFormEvent implements PreviewEvent {
-  const ValidateFormEvent();
+class PreviewEventValidateForm implements PreviewEvent {
+  const PreviewEventValidateForm();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is ValidateFormEvent);
+        (other.runtimeType == runtimeType && other is PreviewEventValidateForm);
   }
 
   @override
@@ -203,8 +205,8 @@ class ValidateFormEvent implements PreviewEvent {
 
 /// @nodoc
 
-class SubmitFormEvent implements PreviewEvent {
-  const SubmitFormEvent({required this.onSuccess});
+class PreviewEventSubmitForm implements PreviewEvent {
+  const PreviewEventSubmitForm({required this.onSuccess});
 
   final void Function(FormModel, Map<String, dynamic>) onSuccess;
 
@@ -212,14 +214,15 @@ class SubmitFormEvent implements PreviewEvent {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $SubmitFormEventCopyWith<SubmitFormEvent> get copyWith =>
-      _$SubmitFormEventCopyWithImpl<SubmitFormEvent>(this, _$identity);
+  $PreviewEventSubmitFormCopyWith<PreviewEventSubmitForm> get copyWith =>
+      _$PreviewEventSubmitFormCopyWithImpl<PreviewEventSubmitForm>(
+          this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is SubmitFormEvent &&
+            other is PreviewEventSubmitForm &&
             (identical(other.onSuccess, onSuccess) ||
                 other.onSuccess == onSuccess));
   }
@@ -234,22 +237,22 @@ class SubmitFormEvent implements PreviewEvent {
 }
 
 /// @nodoc
-abstract mixin class $SubmitFormEventCopyWith<$Res>
+abstract mixin class $PreviewEventSubmitFormCopyWith<$Res>
     implements $PreviewEventCopyWith<$Res> {
-  factory $SubmitFormEventCopyWith(
-          SubmitFormEvent value, $Res Function(SubmitFormEvent) _then) =
-      _$SubmitFormEventCopyWithImpl;
+  factory $PreviewEventSubmitFormCopyWith(PreviewEventSubmitForm value,
+          $Res Function(PreviewEventSubmitForm) _then) =
+      _$PreviewEventSubmitFormCopyWithImpl;
   @useResult
   $Res call({void Function(FormModel, Map<String, dynamic>) onSuccess});
 }
 
 /// @nodoc
-class _$SubmitFormEventCopyWithImpl<$Res>
-    implements $SubmitFormEventCopyWith<$Res> {
-  _$SubmitFormEventCopyWithImpl(this._self, this._then);
+class _$PreviewEventSubmitFormCopyWithImpl<$Res>
+    implements $PreviewEventSubmitFormCopyWith<$Res> {
+  _$PreviewEventSubmitFormCopyWithImpl(this._self, this._then);
 
-  final SubmitFormEvent _self;
-  final $Res Function(SubmitFormEvent) _then;
+  final PreviewEventSubmitForm _self;
+  final $Res Function(PreviewEventSubmitForm) _then;
 
   /// Create a copy of PreviewEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -257,7 +260,7 @@ class _$SubmitFormEventCopyWithImpl<$Res>
   $Res call({
     Object? onSuccess = null,
   }) {
-    return _then(SubmitFormEvent(
+    return _then(PreviewEventSubmitForm(
       onSuccess: null == onSuccess
           ? _self.onSuccess
           : onSuccess // ignore: cast_nullable_to_non_nullable

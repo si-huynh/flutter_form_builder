@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart' hide FormState;
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_form_builder/blocs/forms/forms_bloc.dart';
 import 'package:gap/gap.dart';
 
 import '../../blocs/form_editor_bloc/form_editor_bloc.dart';
@@ -12,27 +13,30 @@ import '../../widgets/debounced_text_field.dart';
 import '../../widgets/question_card.dart';
 
 @RoutePage()
-class FormBuilderPage extends StatelessWidget {
-  const FormBuilderPage({super.key});
+class FormBuilderPage extends StatefulWidget {
+  const FormBuilderPage({super.key, required this.formId});
+
+  final String formId;
 
   @override
-  Widget build(BuildContext context) {
-    return const FormBuilderView();
-  }
+  State<FormBuilderPage> createState() => _FormBuilderPageState();
 }
 
-class FormBuilderView extends StatefulWidget {
-  const FormBuilderView({super.key});
-
-  @override
-  State<FormBuilderView> createState() => _FormBuilderViewState();
-}
-
-class _FormBuilderViewState extends State<FormBuilderView> {
+class _FormBuilderPageState extends State<FormBuilderPage> {
   Timer? _titleDebounce;
   Timer? _descriptionDebounce;
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
+
+  @override
+  void initState() {
+    final formId = context.read<FormsBloc>().state;
+    if (formId case FormsStateLoaded(:final forms)) {
+      final form = forms.firstWhere((form) => form.id == widget.formId);
+      context.read<FormEditorBloc>().add(LoadFormEvent(form));
+    }
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -49,7 +53,12 @@ class _FormBuilderViewState extends State<FormBuilderView> {
       appBar: AppBar(
         title: const Text('Create Form'),
       ),
-      body: BlocBuilder<FormEditorBloc, FormEditorState>(
+      body: BlocConsumer<FormEditorBloc, FormEditorState>(
+        listener: (context, state) {
+          if (state case FormEditorStateLoaded(:final form)) {
+            context.read<FormsBloc>().add(FormsEvent.updateForm(form));
+          }
+        },
         builder: (context, state) {
           return switch (state) {
             FormEditorStateInitial() =>
@@ -62,9 +71,10 @@ class _FormBuilderViewState extends State<FormBuilderView> {
           };
         },
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
+        heroTag: 'add_question',
         onPressed: () => _showAddQuestionDialog(context),
-        child: const Icon(Icons.add),
+        label: const Icon(Icons.add),
       ),
     );
   }
@@ -232,10 +242,6 @@ class _FormBuilderViewState extends State<FormBuilderView> {
             ListTile(
               title: const Text('Multiple Choice'),
               onTap: () {
-                final state = context.read<FormEditorBloc>().state;
-                if (state case FormEditorStateInitial()) {
-                  context.read<FormEditorBloc>().add(const CreateFormEvent());
-                }
                 context.read<FormEditorBloc>().add(
                       const AddQuestionEvent(QuestionType.multipleChoice()),
                     );
@@ -245,10 +251,6 @@ class _FormBuilderViewState extends State<FormBuilderView> {
             ListTile(
               title: const Text('Paragraph'),
               onTap: () {
-                final state = context.read<FormEditorBloc>().state;
-                if (state case FormEditorStateInitial()) {
-                  context.read<FormEditorBloc>().add(const CreateFormEvent());
-                }
                 context.read<FormEditorBloc>().add(
                       const AddQuestionEvent(QuestionType.paragraph()),
                     );

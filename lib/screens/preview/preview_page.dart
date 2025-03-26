@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/blocs/form_editor_bloc/form_editor_bloc.dart';
+import 'package:flutter_form_builder/blocs/forms/forms_bloc.dart';
 import 'package:flutter_form_builder/models/form_model.dart';
 import 'package:gap/gap.dart';
 import 'package:uuid/uuid.dart';
@@ -14,7 +15,9 @@ import '../../widgets/preview_question_card.dart';
 
 @RoutePage()
 class PreviewPage extends StatefulWidget {
-  const PreviewPage({super.key});
+  const PreviewPage({super.key, required this.formId});
+
+  final String formId;
 
   @override
   State<PreviewPage> createState() => _PreviewPageState();
@@ -31,9 +34,10 @@ class _PreviewPageState extends State<PreviewPage> {
   }
 
   void _loadFormIfAvailable() {
-    final formState = context.read<FormEditorBloc>().state;
-    if (formState case FormEditorStateLoaded(:final form)) {
-      context.read<PreviewBloc>().add(LoadFormEvent(form));
+    final formState = context.read<FormsBloc>().state;
+    if (formState case FormsStateLoaded(:final forms)) {
+      final form = forms.firstWhere((form) => form.id == widget.formId);
+      context.read<PreviewBloc>().add(PreviewEventLoadForm(form));
     }
   }
 
@@ -42,7 +46,7 @@ class _PreviewPageState extends State<PreviewPage> {
     return BlocConsumer<FormEditorBloc, FormEditorState>(
       listener: (context, state) {
         if (state case FormEditorStateLoaded(:final form)) {
-          context.read<PreviewBloc>().add(LoadFormEvent(form));
+          context.read<PreviewBloc>().add(PreviewEventLoadForm(form));
         }
       },
       builder: (context, state) {
@@ -112,7 +116,7 @@ class _PreviewPageState extends State<PreviewPage> {
             error: errors[question.id],
             onAnswerChanged: (value) {
               context.read<PreviewBloc>().add(
-                    UpdateAnswerEvent(question.id, value),
+                    PreviewEventUpdateAnswer(question.id, value),
                   );
             },
           ),
@@ -124,11 +128,12 @@ class _PreviewPageState extends State<PreviewPage> {
 
   FloatingActionButton _buildSubmitButton(BuildContext context) {
     return FloatingActionButton.extended(
+      heroTag: 'submit_form',
       icon: const Icon(Icons.send),
       label: const Text('Submit'),
       onPressed: () {
         // Validate the form
-        context.read<PreviewBloc>().add(const ValidateFormEvent());
+        context.read<PreviewBloc>().add(const PreviewEventValidateForm());
 
         // Get the updated state after validation
         Future.delayed(Duration.zero, () {
@@ -152,7 +157,7 @@ class _PreviewPageState extends State<PreviewPage> {
               context.read<ResponsesBloc>().add(
                     AddResponseEvent(response, form),
                   );
-              context.router.navigate(const ResponsesRoute());
+              context.router.navigate(ResponsesRoute(formId: form.id));
             } else {
               // Show error message
               ScaffoldMessenger.of(context).showSnackBar(

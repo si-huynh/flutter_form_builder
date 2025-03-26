@@ -38,21 +38,77 @@ class $FormEditorEventCopyWith<$Res> {
 
 /// @nodoc
 
-class CreateFormEvent implements FormEditorEvent {
-  const CreateFormEvent();
+class LoadFormEvent implements FormEditorEvent {
+  const LoadFormEvent(this.form);
+
+  final FormModel form;
+
+  /// Create a copy of FormEditorEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $LoadFormEventCopyWith<LoadFormEvent> get copyWith =>
+      _$LoadFormEventCopyWithImpl<LoadFormEvent>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is CreateFormEvent);
+        (other.runtimeType == runtimeType &&
+            other is LoadFormEvent &&
+            (identical(other.form, form) || other.form == form));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, form);
 
   @override
   String toString() {
-    return 'FormEditorEvent.create()';
+    return 'FormEditorEvent.loadForm(form: $form)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $LoadFormEventCopyWith<$Res>
+    implements $FormEditorEventCopyWith<$Res> {
+  factory $LoadFormEventCopyWith(
+          LoadFormEvent value, $Res Function(LoadFormEvent) _then) =
+      _$LoadFormEventCopyWithImpl;
+  @useResult
+  $Res call({FormModel form});
+
+  $FormModelCopyWith<$Res> get form;
+}
+
+/// @nodoc
+class _$LoadFormEventCopyWithImpl<$Res>
+    implements $LoadFormEventCopyWith<$Res> {
+  _$LoadFormEventCopyWithImpl(this._self, this._then);
+
+  final LoadFormEvent _self;
+  final $Res Function(LoadFormEvent) _then;
+
+  /// Create a copy of FormEditorEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? form = null,
+  }) {
+    return _then(LoadFormEvent(
+      null == form
+          ? _self.form
+          : form // ignore: cast_nullable_to_non_nullable
+              as FormModel,
+    ));
+  }
+
+  /// Create a copy of FormEditorEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $FormModelCopyWith<$Res> get form {
+    return $FormModelCopyWith<$Res>(_self.form, (value) {
+      return _then(_self.copyWith(form: value));
+    });
   }
 }
 
@@ -83,7 +139,7 @@ class UpdateFormEvent implements FormEditorEvent {
 
   @override
   String toString() {
-    return 'FormEditorEvent.update(form: $form)';
+    return 'FormEditorEvent.updateForm(form: $form)';
   }
 }
 
