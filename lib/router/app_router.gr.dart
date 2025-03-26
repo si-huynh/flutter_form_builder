@@ -38,39 +38,18 @@ class DashboardRoute extends _i6.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i2.FormBuilderPage]
-class FormBuilderRoute extends _i6.PageRouteInfo<FormBuilderRouteArgs> {
-  FormBuilderRoute({
-    _i7.Key? key,
-    required String formId,
-    List<_i6.PageRouteInfo>? children,
-  }) : super(
-         FormBuilderRoute.name,
-         args: FormBuilderRouteArgs(key: key, formId: formId),
-         initialChildren: children,
-       );
+class FormBuilderRoute extends _i6.PageRouteInfo<void> {
+  const FormBuilderRoute({List<_i6.PageRouteInfo>? children})
+    : super(FormBuilderRoute.name, initialChildren: children);
 
   static const String name = 'FormBuilderRoute';
 
   static _i6.PageInfo page = _i6.PageInfo(
     name,
     builder: (data) {
-      final args = data.argsAs<FormBuilderRouteArgs>();
-      return _i2.FormBuilderPage(key: args.key, formId: args.formId);
+      return _i6.WrappedRoute(child: const _i2.FormBuilderPage());
     },
   );
-}
-
-class FormBuilderRouteArgs {
-  const FormBuilderRouteArgs({this.key, required this.formId});
-
-  final _i7.Key? key;
-
-  final String formId;
-
-  @override
-  String toString() {
-    return 'FormBuilderRouteArgs{key: $key, formId: $formId}';
-  }
 }
 
 /// generated route for
@@ -112,74 +91,32 @@ class HomeRouteArgs {
 
 /// generated route for
 /// [_i4.PreviewPage]
-class PreviewRoute extends _i6.PageRouteInfo<PreviewRouteArgs> {
-  PreviewRoute({
-    _i7.Key? key,
-    required String formId,
-    List<_i6.PageRouteInfo>? children,
-  }) : super(
-         PreviewRoute.name,
-         args: PreviewRouteArgs(key: key, formId: formId),
-         initialChildren: children,
-       );
+class PreviewRoute extends _i6.PageRouteInfo<void> {
+  const PreviewRoute({List<_i6.PageRouteInfo>? children})
+    : super(PreviewRoute.name, initialChildren: children);
 
   static const String name = 'PreviewRoute';
 
   static _i6.PageInfo page = _i6.PageInfo(
     name,
     builder: (data) {
-      final args = data.argsAs<PreviewRouteArgs>();
-      return _i4.PreviewPage(key: args.key, formId: args.formId);
+      return _i6.WrappedRoute(child: const _i4.PreviewPage());
     },
   );
 }
 
-class PreviewRouteArgs {
-  const PreviewRouteArgs({this.key, required this.formId});
-
-  final _i7.Key? key;
-
-  final String formId;
-
-  @override
-  String toString() {
-    return 'PreviewRouteArgs{key: $key, formId: $formId}';
-  }
-}
-
 /// generated route for
 /// [_i5.ResponsesPage]
-class ResponsesRoute extends _i6.PageRouteInfo<ResponsesRouteArgs> {
-  ResponsesRoute({
-    _i7.Key? key,
-    required String formId,
-    List<_i6.PageRouteInfo>? children,
-  }) : super(
-         ResponsesRoute.name,
-         args: ResponsesRouteArgs(key: key, formId: formId),
-         initialChildren: children,
-       );
+class ResponsesRoute extends _i6.PageRouteInfo<void> {
+  const ResponsesRoute({List<_i6.PageRouteInfo>? children})
+    : super(ResponsesRoute.name, initialChildren: children);
 
   static const String name = 'ResponsesRoute';
 
   static _i6.PageInfo page = _i6.PageInfo(
     name,
     builder: (data) {
-      final args = data.argsAs<ResponsesRouteArgs>();
-      return _i5.ResponsesPage(key: args.key, formId: args.formId);
+      return _i6.WrappedRoute(child: const _i5.ResponsesPage());
     },
   );
-}
-
-class ResponsesRouteArgs {
-  const ResponsesRouteArgs({this.key, required this.formId});
-
-  final _i7.Key? key;
-
-  final String formId;
-
-  @override
-  String toString() {
-    return 'ResponsesRouteArgs{key: $key, formId: $formId}';
-  }
 }

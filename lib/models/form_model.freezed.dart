@@ -19,6 +19,7 @@ mixin _$FormModel {
   String get title;
   String get description;
   List<QuestionModel> get questions;
+  List<ResponseModel> get responses;
 
   /// Create a copy of FormModel
   /// with the given fields replaced by the non-null parameter values.
@@ -39,17 +40,23 @@ mixin _$FormModel {
             (identical(other.title, title) || other.title == title) &&
             (identical(other.description, description) ||
                 other.description == description) &&
-            const DeepCollectionEquality().equals(other.questions, questions));
+            const DeepCollectionEquality().equals(other.questions, questions) &&
+            const DeepCollectionEquality().equals(other.responses, responses));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, title, description,
-      const DeepCollectionEquality().hash(questions));
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      title,
+      description,
+      const DeepCollectionEquality().hash(questions),
+      const DeepCollectionEquality().hash(responses));
 
   @override
   String toString() {
-    return 'FormModel(id: $id, title: $title, description: $description, questions: $questions)';
+    return 'FormModel(id: $id, title: $title, description: $description, questions: $questions, responses: $responses)';
   }
 }
 
@@ -62,7 +69,8 @@ abstract mixin class $FormModelCopyWith<$Res> {
       {String id,
       String title,
       String description,
-      List<QuestionModel> questions});
+      List<QuestionModel> questions,
+      List<ResponseModel> responses});
 }
 
 /// @nodoc
@@ -81,6 +89,7 @@ class _$FormModelCopyWithImpl<$Res> implements $FormModelCopyWith<$Res> {
     Object? title = null,
     Object? description = null,
     Object? questions = null,
+    Object? responses = null,
   }) {
     return _then(_self.copyWith(
       id: null == id
@@ -99,6 +108,10 @@ class _$FormModelCopyWithImpl<$Res> implements $FormModelCopyWith<$Res> {
           ? _self.questions
           : questions // ignore: cast_nullable_to_non_nullable
               as List<QuestionModel>,
+      responses: null == responses
+          ? _self.responses
+          : responses // ignore: cast_nullable_to_non_nullable
+              as List<ResponseModel>,
     ));
   }
 }
@@ -110,8 +123,10 @@ class _FormModel implements FormModel {
       {required this.id,
       required this.title,
       this.description = '',
-      final List<QuestionModel> questions = const []})
-      : _questions = questions;
+      final List<QuestionModel> questions = const [],
+      final List<ResponseModel> responses = const []})
+      : _questions = questions,
+        _responses = responses;
   factory _FormModel.fromJson(Map<String, dynamic> json) =>
       _$FormModelFromJson(json);
 
@@ -129,6 +144,15 @@ class _FormModel implements FormModel {
     if (_questions is EqualUnmodifiableListView) return _questions;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_questions);
+  }
+
+  final List<ResponseModel> _responses;
+  @override
+  @JsonKey()
+  List<ResponseModel> get responses {
+    if (_responses is EqualUnmodifiableListView) return _responses;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_responses);
   }
 
   /// Create a copy of FormModel
@@ -156,17 +180,24 @@ class _FormModel implements FormModel {
             (identical(other.description, description) ||
                 other.description == description) &&
             const DeepCollectionEquality()
-                .equals(other._questions, _questions));
+                .equals(other._questions, _questions) &&
+            const DeepCollectionEquality()
+                .equals(other._responses, _responses));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, title, description,
-      const DeepCollectionEquality().hash(_questions));
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      title,
+      description,
+      const DeepCollectionEquality().hash(_questions),
+      const DeepCollectionEquality().hash(_responses));
 
   @override
   String toString() {
-    return 'FormModel(id: $id, title: $title, description: $description, questions: $questions)';
+    return 'FormModel(id: $id, title: $title, description: $description, questions: $questions, responses: $responses)';
   }
 }
 
@@ -182,7 +213,8 @@ abstract mixin class _$FormModelCopyWith<$Res>
       {String id,
       String title,
       String description,
-      List<QuestionModel> questions});
+      List<QuestionModel> questions,
+      List<ResponseModel> responses});
 }
 
 /// @nodoc
@@ -201,6 +233,7 @@ class __$FormModelCopyWithImpl<$Res> implements _$FormModelCopyWith<$Res> {
     Object? title = null,
     Object? description = null,
     Object? questions = null,
+    Object? responses = null,
   }) {
     return _then(_FormModel(
       id: null == id
@@ -219,6 +252,10 @@ class __$FormModelCopyWithImpl<$Res> implements _$FormModelCopyWith<$Res> {
           ? _self._questions
           : questions // ignore: cast_nullable_to_non_nullable
               as List<QuestionModel>,
+      responses: null == responses
+          ? _self._responses
+          : responses // ignore: cast_nullable_to_non_nullable
+              as List<ResponseModel>,
     ));
   }
 }

@@ -11,5 +11,9 @@ sealed class ResponsesEvent with _$ResponsesEvent {
   const factory ResponsesEvent.deleteResponse(
     String responseId,
     FormModel form,
+    void Function(FormModel form) onSuccess,
   ) = DeleteResponseEvent;
+  const factory ResponsesEvent.deleteResponses(
+    String formId,
+  ) = DeleteResponsesEvent;
 }

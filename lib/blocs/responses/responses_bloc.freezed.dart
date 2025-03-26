@@ -14,94 +14,54 @@ part of 'responses_bloc.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-mixin _$ResponsesEvent {
-  FormModel get form;
-
-  /// Create a copy of ResponsesEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  $ResponsesEventCopyWith<ResponsesEvent> get copyWith =>
-      _$ResponsesEventCopyWithImpl<ResponsesEvent>(
-          this as ResponsesEvent, _$identity);
+mixin _$ResponsesEvent implements DiagnosticableTreeMixin {
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties..add(DiagnosticsProperty('type', 'ResponsesEvent'));
+  }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is ResponsesEvent &&
-            (identical(other.form, form) || other.form == form));
+        (other.runtimeType == runtimeType && other is ResponsesEvent);
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, form);
+  int get hashCode => runtimeType.hashCode;
 
   @override
-  String toString() {
-    return 'ResponsesEvent(form: $form)';
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ResponsesEvent()';
   }
 }
 
 /// @nodoc
-abstract mixin class $ResponsesEventCopyWith<$Res> {
-  factory $ResponsesEventCopyWith(
-          ResponsesEvent value, $Res Function(ResponsesEvent) _then) =
-      _$ResponsesEventCopyWithImpl;
-  @useResult
-  $Res call({FormModel form});
-
-  $FormModelCopyWith<$Res> get form;
-}
-
-/// @nodoc
-class _$ResponsesEventCopyWithImpl<$Res>
-    implements $ResponsesEventCopyWith<$Res> {
-  _$ResponsesEventCopyWithImpl(this._self, this._then);
-
-  final ResponsesEvent _self;
-  final $Res Function(ResponsesEvent) _then;
-
-  /// Create a copy of ResponsesEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? form = null,
-  }) {
-    return _then(_self.copyWith(
-      form: null == form
-          ? _self.form
-          : form // ignore: cast_nullable_to_non_nullable
-              as FormModel,
-    ));
-  }
-
-  /// Create a copy of ResponsesEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $FormModelCopyWith<$Res> get form {
-    return $FormModelCopyWith<$Res>(_self.form, (value) {
-      return _then(_self.copyWith(form: value));
-    });
-  }
+class $ResponsesEventCopyWith<$Res> {
+  $ResponsesEventCopyWith(ResponsesEvent _, $Res Function(ResponsesEvent) __);
 }
 
 /// @nodoc
 
-class LoadResponsesEvent implements ResponsesEvent {
+class LoadResponsesEvent
+    with DiagnosticableTreeMixin
+    implements ResponsesEvent {
   const LoadResponsesEvent(this.form);
 
-  @override
   final FormModel form;
 
   /// Create a copy of ResponsesEvent
   /// with the given fields replaced by the non-null parameter values.
-  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $LoadResponsesEventCopyWith<LoadResponsesEvent> get copyWith =>
       _$LoadResponsesEventCopyWithImpl<LoadResponsesEvent>(this, _$identity);
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties
+      ..add(DiagnosticsProperty('type', 'ResponsesEvent.loadResponses'))
+      ..add(DiagnosticsProperty('form', form));
+  }
 
   @override
   bool operator ==(Object other) {
@@ -115,7 +75,7 @@ class LoadResponsesEvent implements ResponsesEvent {
   int get hashCode => Object.hash(runtimeType, form);
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'ResponsesEvent.loadResponses(form: $form)';
   }
 }
@@ -126,11 +86,9 @@ abstract mixin class $LoadResponsesEventCopyWith<$Res>
   factory $LoadResponsesEventCopyWith(
           LoadResponsesEvent value, $Res Function(LoadResponsesEvent) _then) =
       _$LoadResponsesEventCopyWithImpl;
-  @override
   @useResult
   $Res call({FormModel form});
 
-  @override
   $FormModelCopyWith<$Res> get form;
 }
 
@@ -144,7 +102,6 @@ class _$LoadResponsesEventCopyWithImpl<$Res>
 
   /// Create a copy of ResponsesEvent
   /// with the given fields replaced by the non-null parameter values.
-  @override
   @pragma('vm:prefer-inline')
   $Res call({
     Object? form = null,
@@ -170,20 +127,26 @@ class _$LoadResponsesEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class AddResponseEvent implements ResponsesEvent {
+class AddResponseEvent with DiagnosticableTreeMixin implements ResponsesEvent {
   const AddResponseEvent(this.response, this.form);
 
   final ResponseModel response;
-  @override
   final FormModel form;
 
   /// Create a copy of ResponsesEvent
   /// with the given fields replaced by the non-null parameter values.
-  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $AddResponseEventCopyWith<AddResponseEvent> get copyWith =>
       _$AddResponseEventCopyWithImpl<AddResponseEvent>(this, _$identity);
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties
+      ..add(DiagnosticsProperty('type', 'ResponsesEvent.addResponse'))
+      ..add(DiagnosticsProperty('response', response))
+      ..add(DiagnosticsProperty('form', form));
+  }
 
   @override
   bool operator ==(Object other) {
@@ -199,7 +162,7 @@ class AddResponseEvent implements ResponsesEvent {
   int get hashCode => Object.hash(runtimeType, response, form);
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'ResponsesEvent.addResponse(response: $response, form: $form)';
   }
 }
@@ -210,12 +173,10 @@ abstract mixin class $AddResponseEventCopyWith<$Res>
   factory $AddResponseEventCopyWith(
           AddResponseEvent value, $Res Function(AddResponseEvent) _then) =
       _$AddResponseEventCopyWithImpl;
-  @override
   @useResult
   $Res call({ResponseModel response, FormModel form});
 
   $ResponseModelCopyWith<$Res> get response;
-  @override
   $FormModelCopyWith<$Res> get form;
 }
 
@@ -229,7 +190,6 @@ class _$AddResponseEventCopyWithImpl<$Res>
 
   /// Create a copy of ResponsesEvent
   /// with the given fields replaced by the non-null parameter values.
-  @override
   @pragma('vm:prefer-inline')
   $Res call({
     Object? response = null,
@@ -270,20 +230,30 @@ class _$AddResponseEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class DeleteResponseEvent implements ResponsesEvent {
-  const DeleteResponseEvent(this.responseId, this.form);
+class DeleteResponseEvent
+    with DiagnosticableTreeMixin
+    implements ResponsesEvent {
+  const DeleteResponseEvent(this.responseId, this.form, this.onSuccess);
 
   final String responseId;
-  @override
   final FormModel form;
+  final void Function(FormModel) onSuccess;
 
   /// Create a copy of ResponsesEvent
   /// with the given fields replaced by the non-null parameter values.
-  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $DeleteResponseEventCopyWith<DeleteResponseEvent> get copyWith =>
       _$DeleteResponseEventCopyWithImpl<DeleteResponseEvent>(this, _$identity);
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties
+      ..add(DiagnosticsProperty('type', 'ResponsesEvent.deleteResponse'))
+      ..add(DiagnosticsProperty('responseId', responseId))
+      ..add(DiagnosticsProperty('form', form))
+      ..add(DiagnosticsProperty('onSuccess', onSuccess));
+  }
 
   @override
   bool operator ==(Object other) {
@@ -292,15 +262,17 @@ class DeleteResponseEvent implements ResponsesEvent {
             other is DeleteResponseEvent &&
             (identical(other.responseId, responseId) ||
                 other.responseId == responseId) &&
-            (identical(other.form, form) || other.form == form));
+            (identical(other.form, form) || other.form == form) &&
+            (identical(other.onSuccess, onSuccess) ||
+                other.onSuccess == onSuccess));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, responseId, form);
+  int get hashCode => Object.hash(runtimeType, responseId, form, onSuccess);
 
   @override
-  String toString() {
-    return 'ResponsesEvent.deleteResponse(responseId: $responseId, form: $form)';
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ResponsesEvent.deleteResponse(responseId: $responseId, form: $form, onSuccess: $onSuccess)';
   }
 }
 
@@ -310,11 +282,10 @@ abstract mixin class $DeleteResponseEventCopyWith<$Res>
   factory $DeleteResponseEventCopyWith(
           DeleteResponseEvent value, $Res Function(DeleteResponseEvent) _then) =
       _$DeleteResponseEventCopyWithImpl;
-  @override
   @useResult
-  $Res call({String responseId, FormModel form});
+  $Res call(
+      {String responseId, FormModel form, void Function(FormModel) onSuccess});
 
-  @override
   $FormModelCopyWith<$Res> get form;
 }
 
@@ -328,11 +299,11 @@ class _$DeleteResponseEventCopyWithImpl<$Res>
 
   /// Create a copy of ResponsesEvent
   /// with the given fields replaced by the non-null parameter values.
-  @override
   @pragma('vm:prefer-inline')
   $Res call({
     Object? responseId = null,
     Object? form = null,
+    Object? onSuccess = null,
   }) {
     return _then(DeleteResponseEvent(
       null == responseId
@@ -343,6 +314,10 @@ class _$DeleteResponseEventCopyWithImpl<$Res>
           ? _self.form
           : form // ignore: cast_nullable_to_non_nullable
               as FormModel,
+      null == onSuccess
+          ? _self.onSuccess
+          : onSuccess // ignore: cast_nullable_to_non_nullable
+              as void Function(FormModel),
     ));
   }
 
@@ -354,6 +329,80 @@ class _$DeleteResponseEventCopyWithImpl<$Res>
     return $FormModelCopyWith<$Res>(_self.form, (value) {
       return _then(_self.copyWith(form: value));
     });
+  }
+}
+
+/// @nodoc
+
+class DeleteResponsesEvent
+    with DiagnosticableTreeMixin
+    implements ResponsesEvent {
+  const DeleteResponsesEvent(this.formId);
+
+  final String formId;
+
+  /// Create a copy of ResponsesEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $DeleteResponsesEventCopyWith<DeleteResponsesEvent> get copyWith =>
+      _$DeleteResponsesEventCopyWithImpl<DeleteResponsesEvent>(
+          this, _$identity);
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties
+      ..add(DiagnosticsProperty('type', 'ResponsesEvent.deleteResponses'))
+      ..add(DiagnosticsProperty('formId', formId));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is DeleteResponsesEvent &&
+            (identical(other.formId, formId) || other.formId == formId));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, formId);
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ResponsesEvent.deleteResponses(formId: $formId)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $DeleteResponsesEventCopyWith<$Res>
+    implements $ResponsesEventCopyWith<$Res> {
+  factory $DeleteResponsesEventCopyWith(DeleteResponsesEvent value,
+          $Res Function(DeleteResponsesEvent) _then) =
+      _$DeleteResponsesEventCopyWithImpl;
+  @useResult
+  $Res call({String formId});
+}
+
+/// @nodoc
+class _$DeleteResponsesEventCopyWithImpl<$Res>
+    implements $DeleteResponsesEventCopyWith<$Res> {
+  _$DeleteResponsesEventCopyWithImpl(this._self, this._then);
+
+  final DeleteResponsesEvent _self;
+  final $Res Function(DeleteResponsesEvent) _then;
+
+  /// Create a copy of ResponsesEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? formId = null,
+  }) {
+    return _then(DeleteResponsesEvent(
+      null == formId
+          ? _self.formId
+          : formId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
   }
 }
 
@@ -375,9 +424,14 @@ ResponsesState _$ResponsesStateFromJson(Map<String, dynamic> json) {
 }
 
 /// @nodoc
-mixin _$ResponsesState {
+mixin _$ResponsesState implements DiagnosticableTreeMixin {
   /// Serializes this ResponsesState to a JSON map.
   Map<String, dynamic> toJson();
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties..add(DiagnosticsProperty('type', 'ResponsesState'));
+  }
 
   @override
   bool operator ==(Object other) {
@@ -390,7 +444,7 @@ mixin _$ResponsesState {
   int get hashCode => runtimeType.hashCode;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'ResponsesState()';
   }
 }
@@ -402,7 +456,8 @@ class $ResponsesStateCopyWith<$Res> {
 
 /// @nodoc
 @JsonSerializable()
-class ResponsesStateInitial extends ResponsesState {
+class ResponsesStateInitial extends ResponsesState
+    with DiagnosticableTreeMixin {
   const ResponsesStateInitial({final String? $type})
       : $type = $type ?? 'initial',
         super._();
@@ -420,6 +475,11 @@ class ResponsesStateInitial extends ResponsesState {
   }
 
   @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties..add(DiagnosticsProperty('type', 'ResponsesState.initial'));
+  }
+
+  @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is ResponsesStateInitial);
@@ -430,14 +490,15 @@ class ResponsesStateInitial extends ResponsesState {
   int get hashCode => runtimeType.hashCode;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'ResponsesState.initial()';
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class ResponsesStateLoading extends ResponsesState {
+class ResponsesStateLoading extends ResponsesState
+    with DiagnosticableTreeMixin {
   const ResponsesStateLoading({final String? $type})
       : $type = $type ?? 'loading',
         super._();
@@ -455,6 +516,11 @@ class ResponsesStateLoading extends ResponsesState {
   }
 
   @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties..add(DiagnosticsProperty('type', 'ResponsesState.loading'));
+  }
+
+  @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is ResponsesStateLoading);
@@ -465,31 +531,23 @@ class ResponsesStateLoading extends ResponsesState {
   int get hashCode => runtimeType.hashCode;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'ResponsesState.loading()';
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class ResponsesStateLoaded extends ResponsesState {
+class ResponsesStateLoaded extends ResponsesState with DiagnosticableTreeMixin {
   const ResponsesStateLoaded(
-      {required final List<ResponseModel> responses,
-      required final Map<String, dynamic> aggregation,
+      {required final Map<String, dynamic> aggregation,
+      required this.form,
       final String? $type})
-      : _responses = responses,
-        _aggregation = aggregation,
+      : _aggregation = aggregation,
         $type = $type ?? 'loaded',
         super._();
   factory ResponsesStateLoaded.fromJson(Map<String, dynamic> json) =>
       _$ResponsesStateLoadedFromJson(json);
-
-  final List<ResponseModel> _responses;
-  List<ResponseModel> get responses {
-    if (_responses is EqualUnmodifiableListView) return _responses;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_responses);
-  }
 
   final Map<String, dynamic> _aggregation;
   Map<String, dynamic> get aggregation {
@@ -497,6 +555,8 @@ class ResponsesStateLoaded extends ResponsesState {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableMapView(_aggregation);
   }
+
+  final FormModel form;
 
   @JsonKey(name: 'runtimeType')
   final String $type;
@@ -517,26 +577,31 @@ class ResponsesStateLoaded extends ResponsesState {
   }
 
   @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties
+      ..add(DiagnosticsProperty('type', 'ResponsesState.loaded'))
+      ..add(DiagnosticsProperty('aggregation', aggregation))
+      ..add(DiagnosticsProperty('form', form));
+  }
+
+  @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is ResponsesStateLoaded &&
             const DeepCollectionEquality()
-                .equals(other._responses, _responses) &&
-            const DeepCollectionEquality()
-                .equals(other._aggregation, _aggregation));
+                .equals(other._aggregation, _aggregation) &&
+            (identical(other.form, form) || other.form == form));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_responses),
-      const DeepCollectionEquality().hash(_aggregation));
+      runtimeType, const DeepCollectionEquality().hash(_aggregation), form);
 
   @override
-  String toString() {
-    return 'ResponsesState.loaded(responses: $responses, aggregation: $aggregation)';
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ResponsesState.loaded(aggregation: $aggregation, form: $form)';
   }
 }
 
@@ -547,7 +612,9 @@ abstract mixin class $ResponsesStateLoadedCopyWith<$Res>
           $Res Function(ResponsesStateLoaded) _then) =
       _$ResponsesStateLoadedCopyWithImpl;
   @useResult
-  $Res call({List<ResponseModel> responses, Map<String, dynamic> aggregation});
+  $Res call({Map<String, dynamic> aggregation, FormModel form});
+
+  $FormModelCopyWith<$Res> get form;
 }
 
 /// @nodoc
@@ -562,25 +629,35 @@ class _$ResponsesStateLoadedCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   $Res call({
-    Object? responses = null,
     Object? aggregation = null,
+    Object? form = null,
   }) {
     return _then(ResponsesStateLoaded(
-      responses: null == responses
-          ? _self._responses
-          : responses // ignore: cast_nullable_to_non_nullable
-              as List<ResponseModel>,
       aggregation: null == aggregation
           ? _self._aggregation
           : aggregation // ignore: cast_nullable_to_non_nullable
               as Map<String, dynamic>,
+      form: null == form
+          ? _self.form
+          : form // ignore: cast_nullable_to_non_nullable
+              as FormModel,
     ));
+  }
+
+  /// Create a copy of ResponsesState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $FormModelCopyWith<$Res> get form {
+    return $FormModelCopyWith<$Res>(_self.form, (value) {
+      return _then(_self.copyWith(form: value));
+    });
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class ResponsesStateError extends ResponsesState {
+class ResponsesStateError extends ResponsesState with DiagnosticableTreeMixin {
   const ResponsesStateError(this.message, {final String? $type})
       : $type = $type ?? 'error',
         super._();
@@ -607,6 +684,13 @@ class ResponsesStateError extends ResponsesState {
   }
 
   @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties
+      ..add(DiagnosticsProperty('type', 'ResponsesState.error'))
+      ..add(DiagnosticsProperty('message', message));
+  }
+
+  @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
@@ -619,7 +703,7 @@ class ResponsesStateError extends ResponsesState {
   int get hashCode => Object.hash(runtimeType, message);
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'ResponsesState.error(message: $message)';
   }
 }

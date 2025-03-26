@@ -42,7 +42,7 @@ void main() {
       return MaterialApp(
         home: BlocProvider<FormEditorBloc>.value(
           value: mockBloc,
-          child: const FormBuilderPage(formId: 'test'),
+          child: const FormBuilderPage(),
         ),
       );
     }

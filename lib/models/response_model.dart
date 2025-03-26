@@ -7,7 +7,6 @@ part 'response_model.g.dart';
 sealed class ResponseModel with _$ResponseModel {
   const factory ResponseModel({
     required String id,
-    required String formId,
     required Map<String, dynamic> answers,
     required DateTime submittedAt,
   }) = _ResponseModel;

@@ -19,6 +19,10 @@ class FormsBloc extends HydratedBloc<FormsEvent, FormsState> {
 
   void _onLoadForms(FormsEventLoads event, Emitter<FormsState> emit) {
     // Nothing to do here
+    if (state is FormsStateInitial) {
+      emit(const FormsState.loading());
+      emit(const FormsState.loaded(forms: []));
+    }
   }
 
   void _onAddForm(FormsEventAddForm event, Emitter<FormsState> emit) {

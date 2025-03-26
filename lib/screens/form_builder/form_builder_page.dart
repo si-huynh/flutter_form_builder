@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart' hide FormState;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/blocs/forms/forms_bloc.dart';
+import 'package:flutter_form_builder/screens/home/home_page.dart';
 import 'package:gap/gap.dart';
 
 import '../../blocs/form_editor_bloc/form_editor_bloc.dart';
@@ -13,30 +14,35 @@ import '../../widgets/debounced_text_field.dart';
 import '../../widgets/question_card.dart';
 
 @RoutePage()
-class FormBuilderPage extends StatefulWidget {
-  const FormBuilderPage({super.key, required this.formId});
-
-  final String formId;
+class FormBuilderPage
+    extends HomePageChild<FormEditorBloc, FormEditorEvent, FormEditorState> {
+  const FormBuilderPage({super.key});
 
   @override
-  State<FormBuilderPage> createState() => _FormBuilderPageState();
+  FormEditorBloc get bloc => FormEditorBloc();
+
+  @override
+  FormEditorEvent initEvent(FormModel form) => LoadFormEvent(form);
+
+  @override
+  Widget get child => const FormBuilderView();
+
+  @override
+  bool shouldReloadForm(BuildContext context) => false;
 }
 
-class _FormBuilderPageState extends State<FormBuilderPage> {
+class FormBuilderView extends StatefulWidget {
+  const FormBuilderView({super.key});
+
+  @override
+  State<FormBuilderView> createState() => _FormBuilderViewState();
+}
+
+class _FormBuilderViewState extends State<FormBuilderView> {
   Timer? _titleDebounce;
   Timer? _descriptionDebounce;
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
-
-  @override
-  void initState() {
-    final formId = context.read<FormsBloc>().state;
-    if (formId case FormsStateLoaded(:final forms)) {
-      final form = forms.firstWhere((form) => form.id == widget.formId);
-      context.read<FormEditorBloc>().add(LoadFormEvent(form));
-    }
-    super.initState();
-  }
 
   @override
   void dispose() {
@@ -71,10 +77,10 @@ class _FormBuilderPageState extends State<FormBuilderPage> {
           };
         },
       ),
-      floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton: FloatingActionButton(
         heroTag: 'add_question',
         onPressed: () => _showAddQuestionDialog(context),
-        label: const Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }

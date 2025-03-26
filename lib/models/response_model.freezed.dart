@@ -16,7 +16,6 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ResponseModel {
   String get id;
-  String get formId;
   Map<String, dynamic> get answers;
   DateTime get submittedAt;
 
@@ -37,7 +36,6 @@ mixin _$ResponseModel {
         (other.runtimeType == runtimeType &&
             other is ResponseModel &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.formId, formId) || other.formId == formId) &&
             const DeepCollectionEquality().equals(other.answers, answers) &&
             (identical(other.submittedAt, submittedAt) ||
                 other.submittedAt == submittedAt));
@@ -45,12 +43,12 @@ mixin _$ResponseModel {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, formId,
+  int get hashCode => Object.hash(runtimeType, id,
       const DeepCollectionEquality().hash(answers), submittedAt);
 
   @override
   String toString() {
-    return 'ResponseModel(id: $id, formId: $formId, answers: $answers, submittedAt: $submittedAt)';
+    return 'ResponseModel(id: $id, answers: $answers, submittedAt: $submittedAt)';
   }
 }
 
@@ -60,11 +58,7 @@ abstract mixin class $ResponseModelCopyWith<$Res> {
           ResponseModel value, $Res Function(ResponseModel) _then) =
       _$ResponseModelCopyWithImpl;
   @useResult
-  $Res call(
-      {String id,
-      String formId,
-      Map<String, dynamic> answers,
-      DateTime submittedAt});
+  $Res call({String id, Map<String, dynamic> answers, DateTime submittedAt});
 }
 
 /// @nodoc
@@ -81,7 +75,6 @@ class _$ResponseModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? formId = null,
     Object? answers = null,
     Object? submittedAt = null,
   }) {
@@ -89,10 +82,6 @@ class _$ResponseModelCopyWithImpl<$Res>
       id: null == id
           ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      formId: null == formId
-          ? _self.formId
-          : formId // ignore: cast_nullable_to_non_nullable
               as String,
       answers: null == answers
           ? _self.answers
@@ -111,7 +100,6 @@ class _$ResponseModelCopyWithImpl<$Res>
 class _ResponseModel implements ResponseModel {
   const _ResponseModel(
       {required this.id,
-      required this.formId,
       required final Map<String, dynamic> answers,
       required this.submittedAt})
       : _answers = answers;
@@ -120,8 +108,6 @@ class _ResponseModel implements ResponseModel {
 
   @override
   final String id;
-  @override
-  final String formId;
   final Map<String, dynamic> _answers;
   @override
   Map<String, dynamic> get answers {
@@ -154,7 +140,6 @@ class _ResponseModel implements ResponseModel {
         (other.runtimeType == runtimeType &&
             other is _ResponseModel &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.formId, formId) || other.formId == formId) &&
             const DeepCollectionEquality().equals(other._answers, _answers) &&
             (identical(other.submittedAt, submittedAt) ||
                 other.submittedAt == submittedAt));
@@ -162,12 +147,12 @@ class _ResponseModel implements ResponseModel {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, formId,
+  int get hashCode => Object.hash(runtimeType, id,
       const DeepCollectionEquality().hash(_answers), submittedAt);
 
   @override
   String toString() {
-    return 'ResponseModel(id: $id, formId: $formId, answers: $answers, submittedAt: $submittedAt)';
+    return 'ResponseModel(id: $id, answers: $answers, submittedAt: $submittedAt)';
   }
 }
 
@@ -179,11 +164,7 @@ abstract mixin class _$ResponseModelCopyWith<$Res>
       __$ResponseModelCopyWithImpl;
   @override
   @useResult
-  $Res call(
-      {String id,
-      String formId,
-      Map<String, dynamic> answers,
-      DateTime submittedAt});
+  $Res call({String id, Map<String, dynamic> answers, DateTime submittedAt});
 }
 
 /// @nodoc
@@ -200,7 +181,6 @@ class __$ResponseModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   $Res call({
     Object? id = null,
-    Object? formId = null,
     Object? answers = null,
     Object? submittedAt = null,
   }) {
@@ -208,10 +188,6 @@ class __$ResponseModelCopyWithImpl<$Res>
       id: null == id
           ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      formId: null == formId
-          ? _self.formId
-          : formId // ignore: cast_nullable_to_non_nullable
               as String,
       answers: null == answers
           ? _self._answers

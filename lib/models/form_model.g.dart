@@ -14,6 +14,10 @@ _FormModel _$FormModelFromJson(Map<String, dynamic> json) => _FormModel(
               ?.map((e) => QuestionModel.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
+      responses: (json['responses'] as List<dynamic>?)
+              ?.map((e) => ResponseModel.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
     );
 
 Map<String, dynamic> _$FormModelToJson(_FormModel instance) =>
@@ -21,5 +25,6 @@ Map<String, dynamic> _$FormModelToJson(_FormModel instance) =>
       'id': instance.id,
       'title': instance.title,
       'description': instance.description,
-      'questions': instance.questions.map((q) => q.toJson()).toList(),
+      'questions': instance.questions,
+      'responses': instance.responses,
     };

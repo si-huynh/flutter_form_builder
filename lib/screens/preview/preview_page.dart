@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_form_builder/blocs/form_editor_bloc/form_editor_bloc.dart';
 import 'package:flutter_form_builder/blocs/forms/forms_bloc.dart';
 import 'package:flutter_form_builder/models/form_model.dart';
 import 'package:gap/gap.dart';
@@ -14,71 +13,68 @@ import '../../router/app_router.gr.dart';
 import '../../widgets/preview_question_card.dart';
 
 @RoutePage()
-class PreviewPage extends StatefulWidget {
-  const PreviewPage({super.key, required this.formId});
-
-  final String formId;
+class PreviewPage extends StatelessWidget implements AutoRouteWrapper {
+  const PreviewPage({super.key});
 
   @override
-  State<PreviewPage> createState() => _PreviewPageState();
+  Widget wrappedRoute(BuildContext context) {
+    final args = context.tabsRouter.routeData.route.args as HomeRouteArgs;
+    final formId = args.formId;
+    final formsState = context.read<FormsBloc>().state;
+    if (formsState case FormsStateLoaded(:final forms)) {
+      final form = forms.firstWhere((form) => form.id == formId);
+      return BlocProvider(
+        create: (context) => PreviewBloc()..add(PreviewEventLoadForm(form)),
+        child: this,
+      );
+    }
+    return this;
+  }
+
+  @override
+  Widget build(BuildContext context) => BlocConsumer<FormsBloc, FormsState>(
+        listener: (context, state) {
+          if (state case FormsStateLoaded(:final forms)) {
+            final formId = context.tabsRouter.routeData.route.args.formId;
+            final form = forms.firstWhere((form) => form.id == formId);
+            context.read<PreviewBloc>().add(PreviewEventLoadForm(form));
+          }
+        },
+        builder: (context, state) {
+          return const PreviewPageView();
+        },
+      );
 }
 
-class _PreviewPageState extends State<PreviewPage> {
-  @override
-  void initState() {
-    super.initState();
-    // Ensure form is loaded when page is created - will be called after first build
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _loadFormIfAvailable();
-    });
-  }
-
-  void _loadFormIfAvailable() {
-    final formState = context.read<FormsBloc>().state;
-    if (formState case FormsStateLoaded(:final forms)) {
-      final form = forms.firstWhere((form) => form.id == widget.formId);
-      context.read<PreviewBloc>().add(PreviewEventLoadForm(form));
-    }
-  }
+class PreviewPageView extends StatelessWidget {
+  const PreviewPageView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<FormEditorBloc, FormEditorState>(
-      listener: (context, state) {
-        if (state case FormEditorStateLoaded(:final form)) {
-          context.read<PreviewBloc>().add(PreviewEventLoadForm(form));
-        }
-      },
-      builder: (context, state) {
-        if (state case FormEditorStateInitial()) {
-          return const Center(
-            child: Text('No form found'),
-          );
-        }
-        return Scaffold(
-          appBar: AppBar(
-            title: const Text('Preview Form'),
-          ),
-          body: BlocBuilder<PreviewBloc, PreviewState>(
-            builder: (context, state) {
-              return switch (state) {
-                PreviewStateInitial() => const SizedBox.shrink(),
-                PreviewStateLoading() =>
-                  const Center(child: CircularProgressIndicator()),
-                PreviewStateLoaded(
-                  :final form,
-                  :final answers,
-                  :final errors
-                ) =>
-                  _buildPreviewListContent(form, context, answers, errors),
-                PreviewStateError(:final message) =>
-                  Center(child: Text(message)),
-              };
-            },
-          ),
-          floatingActionButton: _buildSubmitButton(context),
-        );
-      },
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Preview Form'),
+      ),
+      body: BlocConsumer<PreviewBloc, PreviewState>(
+        listener: (context, state) {
+          if (state case PreviewStateError(:final message)) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(message)),
+            );
+          }
+        },
+        builder: (context, state) {
+          return switch (state) {
+            PreviewStateInitial() => const SizedBox.shrink(),
+            PreviewStateLoading() =>
+              const Center(child: CircularProgressIndicator()),
+            PreviewStateLoaded(:final form, :final answers, :final errors) =>
+              _buildPreviewListContent(form, context, answers, errors),
+            PreviewStateError(:final message) => Center(child: Text(message)),
+          };
+        },
+      ),
+      floatingActionButton: _buildSubmitButton(context),
     );
   }
 
@@ -149,7 +145,6 @@ class _PreviewPageState extends State<PreviewPage> {
               // Create response and submit
               final response = ResponseModel(
                 id: const Uuid().v4(),
-                formId: form.id,
                 answers: answers,
                 submittedAt: DateTime.now(),
               );
@@ -157,7 +152,13 @@ class _PreviewPageState extends State<PreviewPage> {
               context.read<ResponsesBloc>().add(
                     AddResponseEvent(response, form),
                   );
-              context.router.navigate(ResponsesRoute(formId: form.id));
+
+              context.read<FormsBloc>().add(
+                    FormsEvent.updateForm(
+                      form.copyWith(responses: [...form.responses, response]),
+                    ),
+                  );
+              context.router.navigate(const ResponsesRoute());
             } else {
               // Show error message
               ScaffoldMessenger.of(context).showSnackBar(

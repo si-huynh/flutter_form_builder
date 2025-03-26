@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/blocs/forms/forms_bloc.dart';
+import 'package:flutter_form_builder/blocs/responses/responses_bloc.dart';
 import 'package:flutter_form_builder/models/form_model.dart';
 import 'package:gap/gap.dart';
 import 'package:uuid/uuid.dart';
@@ -22,7 +23,7 @@ class _DashboardPageState extends State<DashboardPage> {
     super.initState();
     // Load forms when the page initializes
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<FormsBloc>();
+      context.read<FormsBloc>().add(const FormsEventLoads());
     });
   }
 
@@ -35,8 +36,7 @@ class _DashboardPageState extends State<DashboardPage> {
       body: BlocBuilder<FormsBloc, FormsState>(
         builder: (context, state) {
           return switch (state) {
-            FormsStateInitial() =>
-              const Center(child: Text('Loading forms...')),
+            FormsStateInitial() => const SizedBox.shrink(),
             FormsStateLoading() =>
               const Center(child: CircularProgressIndicator()),
             FormsStateLoaded(:final forms) => _buildFormsGrid(context, forms),
@@ -197,6 +197,9 @@ class _DashboardPageState extends State<DashboardPage> {
             onPressed: () {
               Navigator.of(context).pop();
               context.read<FormsBloc>().add(FormsEvent.deleteForm(form.id));
+              context.read<ResponsesBloc>().add(
+                    DeleteResponsesEvent(form.id),
+                  );
             },
             child: const Text('DELETE'),
           ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/blocs/forms/forms_bloc.dart';
+import 'package:flutter_form_builder/blocs/responses/responses_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'router/app_router.dart';
@@ -22,8 +23,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => FormsBloc()..add(const FormsEvent.loadForms()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+            create: (context) => FormsBloc()..add(const FormsEventLoads())),
+        BlocProvider(create: (context) => ResponsesBloc()),
+      ],
       child: MaterialApp.router(
         title: 'Flutter Form Builder',
         theme: ThemeData(

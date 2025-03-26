@@ -1,73 +1,54 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_form_builder/blocs/form_editor_bloc/form_editor_bloc.dart';
 import 'package:flutter_form_builder/blocs/forms/forms_bloc.dart';
+import 'package:flutter_form_builder/router/app_router.gr.dart';
 import 'package:flutter_form_builder/widgets/paragraph_question.dart';
 import 'package:gap/gap.dart';
+import 'package:intl/intl.dart';
 import '../../blocs/responses/responses_bloc.dart';
 import '../../models/form_model.dart';
 import '../../models/question_model.dart';
 import '../../models/response_model.dart';
 
 @RoutePage()
-class ResponsesPage extends StatefulWidget {
-  const ResponsesPage({
-    super.key,
-    required this.formId,
-  });
-
-  @PathParam()
-  final String formId;
+class ResponsesPage extends StatelessWidget implements AutoRouteWrapper {
+  const ResponsesPage({super.key});
 
   @override
-  State<ResponsesPage> createState() => _ResponsesPageState();
-}
-
-class _ResponsesPageState extends State<ResponsesPage> {
-  @override
-  void initState() {
-    super.initState();
-    // Ensure form is loaded when page is created - will be called after first build
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _loadFormIfAvailable();
-    });
-  }
-
-  void _loadFormIfAvailable() {
-    final formState = context.read<FormsBloc>().state;
-    if (formState case FormsStateLoaded(:final forms)) {
-      final form = forms.firstWhere((form) => form.id == widget.formId);
-      context.read<ResponsesBloc>().add(LoadResponsesEvent(form));
+  Widget wrappedRoute(BuildContext context) {
+    final args = context.tabsRouter.routeData.route.args as HomeRouteArgs;
+    final formId = args.formId;
+    final formsState = context.read<FormsBloc>().state;
+    if (formsState case FormsStateLoaded(:final forms)) {
+      final form = forms.firstWhere((form) => form.id == formId);
+      return BlocProvider(
+        create: (context) => ResponsesBloc()..add(LoadResponsesEvent(form)),
+        child: this,
+      );
     }
+    return this;
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<FormEditorBloc, FormEditorState>(
-      listenWhen: (previous, current) => current is FormEditorStateLoaded,
+    return BlocConsumer<FormsBloc, FormsState>(
       listener: (context, state) {
-        if (state case FormEditorStateLoaded(:final form)) {
+        if (state case FormsStateLoaded(:final forms)) {
+          final formId = context.tabsRouter.routeData.route.args.formId;
+          final form = forms.firstWhere((form) => form.id == formId);
           context.read<ResponsesBloc>().add(LoadResponsesEvent(form));
         }
       },
       builder: (context, state) {
-        return switch (state) {
-          FormEditorStateLoaded(:final form) => ResponsesView(form: form),
-          _ => const SizedBox.shrink(),
-        };
+        return const ResponsesView();
       },
     );
   }
 }
 
 class ResponsesView extends StatelessWidget {
-  const ResponsesView({
-    required this.form,
-    super.key,
-  });
-
-  final FormModel form;
+  const ResponsesView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -82,8 +63,11 @@ class ResponsesView extends StatelessWidget {
               const Center(child: Text('No responses yet')),
             ResponsesStateLoading() =>
               const Center(child: CircularProgressIndicator()),
-            ResponsesStateLoaded(:final responses, :final aggregation) =>
-              _buildResponsesList(context, responses, aggregation),
+            ResponsesStateLoaded(
+              :final aggregation,
+              :final form,
+            ) =>
+              _buildResponsesList(context, aggregation, form),
             ResponsesStateError(:final message) => Center(child: Text(message)),
           };
         },
@@ -93,10 +77,10 @@ class ResponsesView extends StatelessWidget {
 
   Widget _buildResponsesList(
     BuildContext context,
-    List<ResponseModel> responses,
     Map<String, dynamic> aggregation,
+    FormModel form,
   ) {
-    if (responses.isEmpty) {
+    if (form.responses.isEmpty) {
       return const Center(child: Text('No responses yet'));
     }
 
@@ -121,7 +105,13 @@ class ResponsesView extends StatelessWidget {
           style: Theme.of(context).textTheme.titleLarge,
         ),
         const Gap(16),
-        ...responses.map((response) => _buildResponseCard(context, response)),
+        ...form.responses.map(
+          (response) => _buildResponseCard(
+            context,
+            response,
+            form,
+          ),
+        ),
       ],
     );
   }
@@ -234,7 +224,12 @@ class ResponsesView extends StatelessWidget {
     );
   }
 
-  Widget _buildResponseCard(BuildContext context, ResponseModel response) {
+  Widget _buildResponseCard(
+    BuildContext context,
+    ResponseModel response,
+    FormModel form,
+  ) {
+    final formatter = DateFormat('MMM d, yyyy h:mm a');
     return Card(
       child: ListTile(
         title: Text(
@@ -242,19 +237,23 @@ class ResponsesView extends StatelessWidget {
           style: Theme.of(context).textTheme.titleMedium,
         ),
         subtitle: Text(
-          'Submitted on ${response.submittedAt.toString()}',
+          'Submitted on ${formatter.format(response.submittedAt)}',
         ),
         trailing: IconButton(
           icon: const Icon(Icons.delete),
           onPressed: () {
             context.read<ResponsesBloc>().add(
-                  DeleteResponseEvent(response.id, form),
+                  DeleteResponseEvent(
+                    response.id,
+                    form,
+                    (form) => context.read<FormsBloc>().add(
+                          FormsEvent.updateForm(form),
+                        ),
+                  ),
                 );
           },
         ),
-        onTap: () {
-          // TODO: Navigate to response details
-        },
+        onTap: () {},
       ),
     );
   }

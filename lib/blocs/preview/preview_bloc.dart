@@ -1,4 +1,3 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import '../../models/form_model.dart';
@@ -8,7 +7,7 @@ part 'preview_state.dart';
 part 'preview_bloc.freezed.dart';
 part 'preview_bloc.g.dart';
 
-class PreviewBloc extends HydratedBloc<PreviewEvent, PreviewState> {
+class PreviewBloc extends Bloc<PreviewEvent, PreviewState> {
   PreviewBloc() : super(const PreviewState.initial()) {
     on<PreviewEventLoadForm>(_onLoadForm);
     on<PreviewEventUpdateAnswer>(_onUpdateAnswer);
@@ -28,7 +27,9 @@ class PreviewBloc extends HydratedBloc<PreviewEvent, PreviewState> {
   }
 
   void _onUpdateAnswer(
-      PreviewEventUpdateAnswer event, Emitter<PreviewState> emit) {
+    PreviewEventUpdateAnswer event,
+    Emitter<PreviewState> emit,
+  ) {
     switch (state) {
       case PreviewStateLoaded(:final form, :final answers, :final errors):
         final updatedAnswers = Map<String, dynamic>.from(answers);
@@ -87,15 +88,5 @@ class PreviewBloc extends HydratedBloc<PreviewEvent, PreviewState> {
       case _:
         return;
     }
-  }
-
-  @override
-  PreviewState? fromJson(Map<String, dynamic> json) {
-    return PreviewState.fromJson(json);
-  }
-
-  @override
-  Map<String, dynamic>? toJson(PreviewState state) {
-    return state.toJson();
   }
 }

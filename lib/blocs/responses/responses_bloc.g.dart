@@ -33,18 +33,16 @@ Map<String, dynamic> _$ResponsesStateLoadingToJson(
 ResponsesStateLoaded _$ResponsesStateLoadedFromJson(
         Map<String, dynamic> json) =>
     ResponsesStateLoaded(
-      responses: (json['responses'] as List<dynamic>)
-          .map((e) => ResponseModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
       aggregation: json['aggregation'] as Map<String, dynamic>,
+      form: FormModel.fromJson(json['form'] as Map<String, dynamic>),
       $type: json['runtimeType'] as String?,
     );
 
 Map<String, dynamic> _$ResponsesStateLoadedToJson(
         ResponsesStateLoaded instance) =>
     <String, dynamic>{
-      'responses': instance.responses,
       'aggregation': instance.aggregation,
+      'form': instance.form,
       'runtimeType': instance.$type,
     };
 

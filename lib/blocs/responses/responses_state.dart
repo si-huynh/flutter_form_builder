@@ -7,8 +7,8 @@ sealed class ResponsesState with _$ResponsesState {
   const factory ResponsesState.initial() = ResponsesStateInitial;
   const factory ResponsesState.loading() = ResponsesStateLoading;
   const factory ResponsesState.loaded({
-    required List<ResponseModel> responses,
     required Map<String, dynamic> aggregation,
+    required FormModel form,
   }) = ResponsesStateLoaded;
   const factory ResponsesState.error(String message) = ResponsesStateError;
 
