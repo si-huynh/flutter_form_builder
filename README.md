@@ -152,9 +152,42 @@ flutter test integration_test/
 
 To generate test coverage reports:
 ```bash
-flutter test --coverage
-genhtml coverage/lcov.info -o coverage/html
+# Run the coverage script
+./tool/coverage.sh
 ```
+
+This script will:
+1. Run all tests with coverage instrumentation
+2. Automatically exclude generated files (*.g.dart, *.freezed.dart) from coverage metrics
+3. Generate an HTML coverage report
+4. Display files with coverage below 85%
+5. Open the HTML report in your browser (on macOS)
+
+You can also run the steps manually:
+```bash
+# Run tests with coverage
+flutter test --coverage
+
+# Generate HTML report
+genhtml coverage/lcov.info -o coverage/html
+
+# Open coverage report (macOS)
+open coverage/html/index.html
+```
+
+#### Interpreting Coverage Results
+
+- Green: Lines covered by tests
+- Red: Lines not covered by tests
+- Grey: Lines ignored in coverage (typically non-executable lines)
+
+#### Coverage Goals
+
+The project aims for the following test coverage targets:
+- Models: >95% coverage
+- BLoC classes: >90% coverage 
+- UI/Widgets: >85% coverage
+- Utility functions: >90% coverage
 
 ## Troubleshooting
 

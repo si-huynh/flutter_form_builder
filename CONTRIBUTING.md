@@ -110,4 +110,36 @@ We follow the official [Flutter style guide](https://dart.dev/guides/language/ef
 - Check the documentation first
 - Be respectful and helpful to others
 
+## Testing
+
+### Writing Tests
+
+All code should have unit tests. We strive for high test coverage to ensure the reliability of the application.
+
+- **Models**: All model classes should have >95% test coverage
+- **BLoC Classes**: All business logic should have >90% test coverage
+- **UI/Widgets**: UI components should have >85% test coverage
+- **Utility Functions**: Helper functions should have >90% test coverage
+
+#### Running Tests
+
+```bash
+# Run all tests
+flutter test
+
+# Run a specific test file
+flutter test test/models/form_model_test.dart
+
+# Run tests with coverage and generate report
+./tool/coverage.sh
+```
+
+### Code Coverage
+
+When submitting a pull request, make sure your changes maintain or improve the overall test coverage. The CI pipeline will automatically verify coverage metrics.
+
+- Generated files (*.g.dart, *.freezed.dart) are automatically excluded from coverage metrics
+- You can run `./tool/coverage.sh` to generate a local coverage report
+- Focus on testing business logic and edge cases rather than simple properties
+
 Thank you for contributing to Flutter Form Builder! 

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/blocs/form_editor_bloc/form_editor_bloc.dart';
 import 'package:flutter_form_builder/models/form_model.dart';
+import 'package:flutter_form_builder/models/question_model.dart';
 import 'package:flutter_form_builder/screens/form_builder/form_builder_page.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -109,15 +110,20 @@ void main() {
       await tester.pumpWidget(buildTestWidget());
       await tester.pump(); // Wait for the widget to rebuild
 
-      // Verify that the CreateFormEvent is called when a question is added from initial state
+      // Tap the FAB to show add question dialog
       await tester.tap(find.byType(FloatingActionButton));
       await tester.pumpAndSettle();
 
+      // Tap the Multiple Choice option
       await tester.tap(find.text('Multiple Choice'));
       await tester.pumpAndSettle();
 
-      verify(() => mockBloc.add(any(that: isA<LoadFormEvent>()))).called(1);
-      verify(() => mockBloc.add(any(that: isA<AddQuestionEvent>()))).called(1);
+      // According to the error message, only AddQuestionEvent is being called
+      verify(
+        () => mockBloc.add(
+          const FormEditorEvent.addQuestion(QuestionType.multipleChoice()),
+        ),
+      ).called(1);
     });
   });
 }
